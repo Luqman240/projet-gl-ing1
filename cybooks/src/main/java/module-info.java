@@ -11,6 +11,6 @@ module com.example.cybooks {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.cybooks to javafx.fxml;
-    exports com.example.cybooks;
+    opens com.example.cybooks.gui to javafx.fxml;
+    exports com.example.cybooks.gui;
 }
