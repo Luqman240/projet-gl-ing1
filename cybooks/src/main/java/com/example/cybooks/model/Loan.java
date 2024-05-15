@@ -39,6 +39,7 @@ public class Loan {
         this.bookID = bookID;
         LocalDate currentDate = LocalDate.now();
         this.loanDate = currentDate;
+        this.numberOfDays = numberOfDays;
         this.dueDate = loanDate.plusDays(numberOfDays);
     }
 
@@ -104,7 +105,7 @@ public class Loan {
      * @return The loan's creation date.
      */
 
-    public Date getLoanDate() {
+    public LocalDate getLoanDate() {
         return loanDate;
     }
 
