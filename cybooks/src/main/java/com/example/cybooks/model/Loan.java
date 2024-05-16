@@ -15,19 +15,19 @@ import java.time.format.DateTimeFormatter;
 public class Loan {
     private int loanID;
     private int userID;
-    private int bookID;
+    private int copyID;
     private LocalDate loanDate;
     private int numberOfDays;
     private LocalDate dueDate;
-    private LocalDate returnDate = null;
-    private boolean isReturned = false;
+    private LocalDate returnDate;
+    private boolean isReturned;
     
     /**
      * Create a new loan with the specified information.
      * 
      * @param loanID The loan's ID.
      * @param userID The user's ID.
-     * @param bookID The book's ID.
+     * @param copyID The ID of the book's copy.
      * @param loanDate The date where the loan started.
      * @param numberOfDays The length of the loan wanted, starting from the loanDate.
      * @param dueDate The date that the book should be returned.
@@ -35,11 +35,11 @@ public class Loan {
      * @param isReturned Boolean that describe if the book has been returned.
     */
 
-    public Loan(int userID, int bookID, int numberOfDays){
+    public Loan(int userID, int bookID){
         this.bookID = bookID;
         LocalDate currentDate = LocalDate.now();
         this.loanDate = currentDate;
-        this.numberOfDays = numberOfDays;
+        this.numberOfDays = 5;
         this.dueDate = loanDate.plusDays(numberOfDays);
     }
 
@@ -87,16 +87,16 @@ public class Loan {
      * @return The book's ID.
      */
 
-    public int getBookID() {
-        return bookID;
+    public int getCopyID() {
+        return copyID;
     }
 
     /**
      * Sets the book's ID.
      */
 
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
+    public void setCopyID(int copyID) {
+        this.copyID = copyID;
     }
 
     /**
@@ -180,5 +180,64 @@ public class Loan {
     public boolean isValid() {
         LocalDate currentDate = LocalDate.now();
         return !isReturned && dueDate.isBefore(currentDate);
+    }
+
+    /**
+     * Gives a String representation of the loan.
+     * 
+     * @return A String representation of the loan.
+     */
+
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "loanID=" + loanID +
+                ", userID=" + userID +
+                ", copyID=" + copyID +
+                ", loanDate=" + loanDate +
+                ", numberOfDays=" + numberOfDays +
+                ", dueDate=" + dueDate +
+                ", returnDate=" + returnDate +
+                ", isReturned=" + isReturned +
+                '}';
+    }
+
+    /**
+     * Register a new loan in the database.
+     * 
+     * @param db
+     */
+
+    public void register(DataBase db) {
+        String query = "INSERT INTO Loans (userID, copyID, loanDate, numberOfDays, dueDate, isReturned) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        int generatedID = db.executeInsert(query, this.userID, this.copyID, this.loanDate.toString(),
+                this.numberOfDays, this.dueDate.toString(), this.isReturned);
+        if (generatedID != -1) {
+            this.loanID = generatedID;
+        }
+    }
+
+    /**
+     * Update the loan in the database.
+     * 
+     * @param db
+     */
+
+    public void update(DataBase db) {
+        String query = "UPDATE Loans SET returnDate = ?, isReturned = ? WHERE loanID = ?";
+        db.executeUpdate(query, this.returnDate != null ? this.returnDate.toString() : null, this.isReturned, this.loanID);
+    }
+
+    /**
+     * End the loan in the database.
+     * 
+     * @param db
+     */
+
+    public void delete(DataBase db) {
+        String query = "DELETE FROM Loans WHERE loanID = ?";
+        db.executeUpdate(query, this.loanID);
     }
 }

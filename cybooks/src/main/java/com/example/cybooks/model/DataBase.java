@@ -94,7 +94,7 @@ public class DataBase {
      * @param params The parameters to set in the prepared statement.
      * @return The generated key, or -1 if no key was generated.
      */
-    public int executeInsert(String query, String... params) {
+    public int executeInsert(String query, Object... params) {
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < params.length; i++) {
                 pstmt.setString(i + 1, params[i]);
@@ -120,7 +120,7 @@ public class DataBase {
      * @param params The parameters to set in the prepared statement.
      * @return The result set of the query.
      */
-    public ResultSet executeQuery(String query, String... params) {
+    public ResultSet executeQuery(String query, Object... params) {
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             for (int i = 0; i < params.length; i++) {

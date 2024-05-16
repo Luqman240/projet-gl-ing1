@@ -7,13 +7,12 @@ package com.example.cybooks.model;
  */
 
 public class Book {
-    private int bookID;
     private String isbn;
     private int copiesAvailable;
 
     /**
+     * Constructs a new book with the specified information.
      * 
-     * @param bookID The book's ID.
      * @param isbn The book's ISBN.
      * @param copiesAvailable The number of copies available for the book.
      */
@@ -21,25 +20,6 @@ public class Book {
     public Book(String isbn, int copiesAvailable) {
         this.isbn = isbn;
         this.copiesAvailable = copiesAvailable;
-    }
-
-    /**
-     * Returns the book's ID.
-     * 
-     * @return The book's ID.
-     */
-    public int getBookID() {
-        return bookID;
-    }
-
-    /**
-     * Sets the book's ID.
-     * This is used internally after retrieving from the database.
-     * 
-     * @param bookID The book's ID.
-     */
-    public void setBookID(int bookID) {
-        this.bookID = bookID;
     }
 
     /**
@@ -83,10 +63,41 @@ public class Book {
     @Override
     public String toString() {
         return "Book{" +
-                "bookID=" + bookID +
-                ", isbn='" + isbn + '\'' +
+                "isbn='" + isbn + '\'' +
                 ", copiesAvailable=" + copiesAvailable +
                 '}';
     }
+
+    /**
+     * Registers the book in the database.
+     * 
+     * @param db The database to register the book in.
+     */
     
+    public void register(DataBase db) {
+        String query = "INSERT INTO Books (isbn, copiesAvailable) VALUES (?, ?)";
+        db.executeInsert(query, this.isbn, this.copiesAvailable);
+    }
+
+    /**
+     * Updates the book's information in the database.
+     * 
+     * @param db The database to update the book in.
+     */
+
+    public void update(DataBase db) {
+        String query = "UPDATE Books SET copiesAvailable = ? WHERE isbn = ?";
+        db.executeUpdate(query, this.copiesAvailable, this.isbn);
+    }
+
+    /**
+     * Deletes the book from the database.
+     * 
+     * @param db The database to delete the book from.
+     */
+
+    public void delete(DataBase db) {
+        String query = "DELETE FROM Books WHERE isbn = ?";
+        db.executeUpdate(query, this.isbn);
+    }
 }
