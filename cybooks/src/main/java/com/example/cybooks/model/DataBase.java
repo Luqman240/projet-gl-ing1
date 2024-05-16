@@ -42,37 +42,31 @@ public class DataBase {
                 "address TEXT);";
 
         String createBooksTable = "CREATE TABLE IF NOT EXISTS Books (" +
-                "bookID VARCHAR(50) PRIMARY KEY, " +
-                "isbn VARCHAR(13), " +
+                "isbn VARCHAR(13) PRIMARY KEY, " +
                 "copiesAvailable INT);";
 
+        String createBookCopiesTable = "CREATE TABLE IF NOT EXISTS BookCopies (" +
+                "copyID INT AUTO_INCREMENT PRIMARY KEY, " +
+                "isbn VARCHAR(13), " +
+                "isLoaned BOOLEAN DEFAULT FALSE, " +
+                "FOREIGN KEY (isbn) REFERENCES Books(isbn) ON DELETE CASCADE);";
+
         String createLoansTable = "CREATE TABLE IF NOT EXISTS Loans (" +
-                "loanID VARCHAR(50) PRIMARY KEY, " +
+                "loanID INT AUTO_INCREMENT PRIMARY KEY, " +
                 "userID INT, " +
-                "bookID VARCHAR(50), " +
+                "copyID INT, " +
                 "loanDate DATE, " +
+                "numberOfDays INT, " +
                 "dueDate DATE, " +
                 "returnDate DATE, " +
-                "FOREIGN KEY (userID) REFERENCES Users(userID), " +
-                "FOREIGN KEY (bookID) REFERENCES Books(bookID));";
+                "isReturned BOOLEAN DEFAULT FALSE, " +
+                "FOREIGN KEY (userID) REFERENCES Users(userID) ON DELETE CASCADE, " +
+                "FOREIGN KEY (copyID) REFERENCES BookCopies(copyID) ON DELETE CASCADE);";
 
         executeUpdate(createUsersTable);
         executeUpdate(createBooksTable);
+        executeUpdate(createBookCopiesTable);
         executeUpdate(createLoansTable);
-    }
-
-    /**
-     * Executes a SQL update statement.
-     *
-     * @param query The SQL statement to execute.
-     */
-    public void executeUpdate(String query) {
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(query);
-            System.out.println("Query executed: " + query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
