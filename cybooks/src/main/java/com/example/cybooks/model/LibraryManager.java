@@ -44,7 +44,7 @@ public class LibraryManager {
      */
     public void unregisterUser(int userId) {
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).userID == userId) {
+            if (users.get(i).getUserID() == userId) {
                 users.remove(i);
                 System.out.println("The user with ID " + userId + " has been removed from the library.");
                 return;
@@ -102,7 +102,7 @@ public class LibraryManager {
         }
         return null; // User not found
     }
-
+ 
     /**
      * Searches for books based on the provided criteria using the BNF API.
      * 
