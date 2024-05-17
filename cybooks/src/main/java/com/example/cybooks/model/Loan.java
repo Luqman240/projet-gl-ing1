@@ -1,9 +1,6 @@
 package com.example.cybooks.model;
 
-import java.util.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -35,8 +32,8 @@ public class Loan {
      * @param isReturned Boolean that describe if the book has been returned.
     */
 
-    public Loan(int userID, int bookID){
-        this.bookID = bookID;
+    public Loan(int userID, int copyID){
+        this.copyID = copyID;
         LocalDate currentDate = LocalDate.now();
         this.loanDate = currentDate;
         this.numberOfDays = 5;

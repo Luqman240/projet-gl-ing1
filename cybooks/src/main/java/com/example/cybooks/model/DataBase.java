@@ -97,7 +97,7 @@ public class DataBase {
     public int executeInsert(String query, Object... params) {
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             for (int i = 0; i < params.length; i++) {
-                pstmt.setString(i + 1, params[i]);
+                pstmt.setObject(i + 1, params[i]);
             }
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -124,7 +124,7 @@ public class DataBase {
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             for (int i = 0; i < params.length; i++) {
-                pstmt.setString(i + 1, params[i]);
+                pstmt.setObject(i + 1, params[i]);
             }
             return pstmt.executeQuery();
         } catch (SQLException e) {
