@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
  * The class also provides methods for searching books based on various criteria and retrieving lists of overdue loans.
  */
 public class LibraryManager {
-
+    /*
+     * le constructeur doit prendre ApiConnector,un objet database,totalCopiesPerBook
+     */
     private List<User> users = new ArrayList<>();
     private List<Loan> loans = new ArrayList<>();
     private BNFApiConnector apiConnector;
