@@ -10,6 +10,7 @@ module com.example.cybooks {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.net.http;
 
     opens com.example.cybooks.gui to javafx.fxml;
     exports com.example.cybooks.gui;
