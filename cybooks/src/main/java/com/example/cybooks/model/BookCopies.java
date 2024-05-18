@@ -109,14 +109,4 @@ public class BookCopies {
         String query = "UPDATE BookCopies SET isLoaned = ? WHERE copyID = ?";
         db.executeUpdate(query, this.isLoaned, this.copyID);
     }
-
-    /**
-     * Deletes the book copy from the database.
-     * @param db The database to delete the book copy from.
-     */
-
-    public void delete(DataBase db) {
-        String query = "DELETE FROM BookCopies WHERE copyID = ?";
-        db.executeUpdate(query, this.copyID);
-    }
 }
