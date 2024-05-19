@@ -113,9 +113,17 @@ public class LibraryManageCLI  {
     }
 
     private void updateUser(Scanner scanner){ //done
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+    
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
 
         if (!libraryManager.userExists(userID)) {
             System.out.println("User not found.");
@@ -140,9 +148,16 @@ public class LibraryManageCLI  {
     }
 
     private void deleteUser(Scanner scanner){ // done + we need to add loan verification
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
 
         try {
             libraryManager.deleteUser(userID);
@@ -153,9 +168,16 @@ public class LibraryManageCLI  {
     }
 
     private void loanBook(Scanner scanner){ //Done
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
         if (!libraryManager.userExists(userID)) {
             System.out.println("User not found.");
             return;
@@ -177,9 +199,16 @@ public class LibraryManageCLI  {
     }
 
     private void returnBook(Scanner scanner){ //Done
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
 
         if (!libraryManager.userExists(userID)) {
             System.out.println("User not found.");
@@ -215,9 +244,16 @@ public class LibraryManageCLI  {
     }
 
     private void searchUserByID(Scanner scanner) { //Done
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
 
         try {
             User user = libraryManager.searchUser(userID);
@@ -270,9 +306,16 @@ public class LibraryManageCLI  {
     }
 
     private void printUserProfile(Scanner scanner) {
-        System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        Scanner scann = new Scanner(System.in);
+        int userID;
+        do{
+            System.out.println("Enter user ID");
+            while(!scann.hasNextInt()) {
+                System.out.println("Please enter a number");
+                scann.next();
+            }
+            userID=scann.nextInt();
+        } while (userID <=0);
 
         try {
             User user = libraryManager.searchUser(userID);
