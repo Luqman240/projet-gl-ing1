@@ -295,18 +295,6 @@ public class LibraryManager {
         return null;
     }
 
-    /*public int getLoanIDbyUserAndBookID(int userID, int copyID) {
-        ResultSet rs = db.executeQuery("SELECT loanID FROM Loans WHERE userID = ? AND copyID = ? AND isReturned = FALSE", userID, copyID);
-        try {
-            if (rs != null && rs.next()) {
-                return rs.getInt("loanID");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-    */
     private Loan getLoanByID(int loanID) {
         ResultSet rs = db.executeQuery("SELECT * FROM Loans WHERE loanID = ?", loanID);
         try {
