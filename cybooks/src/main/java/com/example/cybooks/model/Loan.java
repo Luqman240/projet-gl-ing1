@@ -170,18 +170,6 @@ public class Loan {
     public void setIsReturned(boolean isReturned) {
         this.isReturned = isReturned;
     }
-
-    /**
-     * Check if the loan is still valid.
-     * 
-     * @return True if the loan is still valid, false otherwise.
-     */
-
-    public boolean isValid() {
-        LocalDate currentDate = LocalDate.now();
-        return !isReturned && dueDate.isBefore(currentDate);
-    }
-
     /**
      * Gives a String representation of the loan.
      * 
