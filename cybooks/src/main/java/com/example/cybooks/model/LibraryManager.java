@@ -12,10 +12,6 @@ public class LibraryManager {
         this.db = db;
     }
 
-    public void closeDatabase() {
-        db.stopServer();    
-    }
-
     public void registerUser(String name, String email, String address) throws InvalidEmailFormatException, EmailAlreadyExistsException {
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new InvalidEmailFormatException("Invalid email format: " + email);

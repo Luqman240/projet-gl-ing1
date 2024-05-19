@@ -74,6 +74,7 @@ public class LibraryManageCLI  {
                 }
             }
             scanner.close();
+            db.stopServer();
         }
 
     private void printMenu(){
