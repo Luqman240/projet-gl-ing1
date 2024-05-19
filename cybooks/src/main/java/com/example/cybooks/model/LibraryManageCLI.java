@@ -102,7 +102,7 @@ public class LibraryManageCLI {
 
         try{
             User user = new User(name, email, address);
-            libraryManager.registerUser(user);
+            libraryManager.registerUser(name, email, address);
             System.out.println("User registered with ID : " + user.getUserID());
         } catch (IllegalArgumentException e){
             System.out.println("Error :" + e.getMessage());
@@ -123,7 +123,7 @@ public class LibraryManageCLI {
 
         try{
             User user = new User(userID, name, email, address);
-            libraryManager.updateUser(user);
+            libraryManager.updateUser(userID, name, email, address);
             System.out.println("User updated with ID : " + user.getUserID());
         } catch (IllegalArgumentException e){
             System.out.println("Error :" + e.getMessage());
@@ -148,12 +148,12 @@ public class LibraryManageCLI {
         System.out.println("Enter the user's ID :");
         int userID = scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Enter the book's ID :");
-        int bookID = scanner.nextInt();
+        System.out.println("Enter the book's ISBN :");
+        String bookISBN = scanner.nextLine();
         scanner.nextLine();
 
         try{
-            libraryManager.lendBook(userID, bookID);
+            libraryManager.loanBook(userID, bookISBN);
             System.out.println("Book lent to user with ID : " + userID);
         } catch (IllegalArgumentException e){
             System.out.println("Error :" + e.getMessage());
@@ -169,7 +169,9 @@ public class LibraryManageCLI {
         scanner.nextLine();
 
         try{
-            libraryManager.returnBook(userID, bookID);
+            //Get the right loanID :
+            int loanID = libraryManager.getLoanIDbyUserAndBookID(userID, bookID);
+            libraryManager.returnBook(loanID);
             System.out.println("Book returned by user with ID : " + userID);
         } catch (IllegalArgumentException e){
             System.out.println("Error :" + e.getMessage());
