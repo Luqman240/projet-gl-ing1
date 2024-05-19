@@ -1,9 +1,6 @@
 package com.example.cybooks.model;
 
-
 import com.example.cybooks.exception.*;
-
-
 import java.util.Scanner;
 import java.time.LocalDate;
 
