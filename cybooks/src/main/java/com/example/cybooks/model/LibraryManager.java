@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class LibraryManager2 {
+public class LibraryManager {
     private DataBase db;
 
-    public LibraryManager2(DataBase db) {
+    public LibraryManager(DataBase db) {
         this.db = db;
     }
 
