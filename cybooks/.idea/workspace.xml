@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc1e4d23-d7a7-4bbf-beb6-8154d28926d5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ParseXML.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BookApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ApiConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ApiConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/utils/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/utils/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/BNFApiConnector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/Book.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/utils/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/utils/Config.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,23 +53,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Luqman",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lsaid/Documents/GitHub/projet-gl-ing1/cybooks",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ParseXML.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Luqman&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lsaid/Desktop/jaxb-api-2.2.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\lsaid\Documents\GitHub\projet-gl-ing1\cybooks\src\main\resources\com\example\cybooks\gui" />
@@ -90,7 +103,8 @@
       <workItem from="1715869528055" duration="8950000" />
       <workItem from="1715928456684" duration="8310000" />
       <workItem from="1716041401153" duration="1394000" />
-      <workItem from="1716046707202" duration="394000" />
+      <workItem from="1716046707202" duration="11140000" />
+      <workItem from="1716133360125" duration="4580000" />
     </task>
     <servers />
   </component>
