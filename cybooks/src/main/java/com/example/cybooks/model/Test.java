@@ -1,7 +1,7 @@
 package com.example.cybooks.model;
 
-import com.example.cybooks.model.DataBase;
-import com.example.cybooks.model.User;
+//import com.example.cybooks.model.DataBase;
+//import com.example.cybooks.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
