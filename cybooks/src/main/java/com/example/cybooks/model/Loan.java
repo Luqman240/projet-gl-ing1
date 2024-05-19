@@ -33,11 +33,14 @@ public class Loan {
     */
 
     public Loan(int userID, int copyID){
+        this.userID = userID;
         this.copyID = copyID;
         LocalDate currentDate = LocalDate.now();
         this.loanDate = currentDate;
         this.numberOfDays = 5;
         this.dueDate = loanDate.plusDays(numberOfDays);
+        this.returnDate = null;
+        this.isReturned = false;
     }
 
     /**
