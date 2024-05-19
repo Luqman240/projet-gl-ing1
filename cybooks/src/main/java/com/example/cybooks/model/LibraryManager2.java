@@ -33,6 +33,16 @@ public class LibraryManager2 {
         }
     }
 
+    public String deleteUser(int userID) {
+        User user = getUserByID(userID);
+        if (user == null) {
+            return "User not found.";
+        }
+
+        user.delete(db);
+        return "User deleted successfully.";
+    }
+
     public String updateUser(int userID, String name, String email, String address) {
         User user = getUserByID(userID);
         if (user == null) {
@@ -57,15 +67,34 @@ public class LibraryManager2 {
             return "Error: " + e.getMessage();
         }
     }
-
-    public String deleteUser(int userID) {
-        User user = getUserByID(userID);
-        if (user == null) {
-            return "User not found.";
+    
+    private User getUserByID(int userID) {
+        ResultSet rs = db.executeQuery("SELECT * FROM Users WHERE userID = ?", userID);
+        try {
+            if (rs != null && rs.next()) {
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                User user = new User(name, email, address);
+                user.setUserID(userID);
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
+    }
 
-        user.delete(db);
-        return "User deleted successfully.";
+    private boolean isEmailExists(String email) {
+        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Users WHERE email = ?", email);
+        try {
+            if (rs != null && rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String addBook(String isbn, int copiesAvailable) {
@@ -149,35 +178,7 @@ public class LibraryManager2 {
         return result.toString();
     }
 
-    private User getUserByID(int userID) {
-        ResultSet rs = db.executeQuery("SELECT * FROM Users WHERE userID = ?", userID);
-        try {
-            if (rs != null && rs.next()) {
-                String name = rs.getString("name");
-                String email = rs.getString("email");
-                String address = rs.getString("address");
-                User user = new User(name, email, address);
-                user.setUserID(userID);
-                return user;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private boolean isEmailExists(String email) {
-        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Users WHERE email = ?", email);
-        try {
-            if (rs != null && rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
+    
     private BookCopy getAvailableCopyByISBN(String isbn) {
         ResultSet rs = db.executeQuery("SELECT copyID FROM BookCopies WHERE isbn = ? AND isLoaned = FALSE LIMIT 1", isbn);
         try {
