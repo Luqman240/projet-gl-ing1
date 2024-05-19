@@ -32,6 +32,13 @@ public class User {
         this.address = address;
     }
 
+    public User(int userID, String name, String email, String address) {
+        this.name = name;
+        setEmail(email);
+        this.address = address;
+        this.userID = userID;
+    }
+
     /**
      * Returns the user's ID.
      *
