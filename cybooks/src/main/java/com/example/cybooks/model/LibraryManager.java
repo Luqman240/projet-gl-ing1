@@ -56,12 +56,15 @@ public class LibraryManager {
         user.update(db);
     }
 
-    public void deleteUser(int userID) throws UserNotFoundException {
+    public void deleteUser(int userID) throws UserNotFoundException{
         User user = getUserByID(userID);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
-
+        
+        if (isLoansExistsForUsers(userID)) {
+            throw new UserNotFoundException("User has loans" );
+        }
         user.delete(db);
     }
 
@@ -79,7 +82,7 @@ public class LibraryManager {
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
-        
+
         if (!isISBNExistsInCopies(isbn)) {
             this.addBook(isbn, 5);
         }
@@ -292,7 +295,7 @@ public class LibraryManager {
         return null;
     }
 
-    public int getLoanIDbyUserAndBookID(int userID, int copyID) {
+    /*public int getLoanIDbyUserAndBookID(int userID, int copyID) {
         ResultSet rs = db.executeQuery("SELECT loanID FROM Loans WHERE userID = ? AND copyID = ? AND isReturned = FALSE", userID, copyID);
         try {
             if (rs != null && rs.next()) {
@@ -303,7 +306,7 @@ public class LibraryManager {
         }
         return -1;
     }
-
+    */
     private Loan getLoanByID(int loanID) {
         ResultSet rs = db.executeQuery("SELECT * FROM Loans WHERE loanID = ?", loanID);
         try {
@@ -391,8 +394,18 @@ public class LibraryManager {
         return result.toString();
     }
 
+    private boolean isLoansExistsForUsers(int userID) {
+        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Loans WHERE userID = ? AND isReturned = FALSE", userID);
+        try {
+            if (rs != null && rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-    
 }
 
        
