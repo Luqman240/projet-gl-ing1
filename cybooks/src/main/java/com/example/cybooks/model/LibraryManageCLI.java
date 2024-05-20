@@ -71,6 +71,7 @@ public class LibraryManageCLI  {
                     break;
                 case 13:
                     exit = true;
+                    db.stopServer();
                     break;
                 default:
                     System.out.println("Invalid choice, please try again.");

@@ -1,5 +1,6 @@
 package com.example.cybooks.model;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,12 +24,24 @@ public class DataBase {
      */
     public void startServer() {
         try {
+            String command = "C:\\wamp64\\bin\\mysql\\mysql8.2.0\\bin\\mysqld.exe";
+            try {
+                Process process = Runtime.getRuntime().exec(command);
+            } catch (Exception e) {
+                command = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqld.exe";
+            }
+            //Wait for the server to start
+            Thread.sleep(5000);
+            
             Class.forName("com.mysql.cj.jdbc.Driver");
             createDatabaseIfNotExists();
             connection = DriverManager.getConnection(JDBC_URL + DATABASE_NAME, USER, PASSWORD);
             System.out.println("Database started and connected.");
             initializeDatabase();
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -156,6 +169,19 @@ public class DataBase {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
+                // Stop the mysqld process
+                String command = "C:\\wamp64\\bin\\mysql\\mysql8.2.0\\bin\\mysqladmin.exe -u root shutdown";
+                try {
+                    Process process = Runtime.getRuntime().exec(command);
+                } catch (Exception e) {
+                    command = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqladmin.exe -u root shutdown";
+                    try {
+                        Process process = Runtime.getRuntime().exec(command);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                }
                 System.out.println("Database stopped.");
             }
         } catch (SQLException e) {
