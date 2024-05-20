@@ -1,5 +1,8 @@
 package com.example.cybooks.model;
 
+public class User {
+}
+package com.example.cybooks.model;
 
 /**
  * Represents a library user.
@@ -64,7 +67,7 @@ public class User {
      * @param name The user's name.
      */
 
-    public void setName(String name){
+    public void setName(){
         this.name = name;
     }
 
@@ -131,7 +134,7 @@ public class User {
      * @param db The DataBase object used to execute the query.
      */
 
-    /*public void register(DataBase db){
+    public void register(DataBase db){
         String query = "INSERT INTO Users (name, email, address) VALUES (?, ?, ?)";
         int generatedID = db.executeInsert(query, this.name, this.email, this.address);
         if (generatedID!= -1){
@@ -144,7 +147,7 @@ public class User {
          * @param db The Database object used to execute the query.
          */
 
-        /*public void update(DataBase db){
+        public void update(DataBase db){
             String query = "UPDATE Users SET name = ?, email = ?, address = ? WHERE userID = ?";
             db.executeUpdate(query, this.name, this.email, this.address, this.userID);
         }
@@ -154,8 +157,8 @@ public class User {
          * @param db The DataBase object used to execute the query.
          */
 
-       /* public void delete(DataBase db){
+        public void delete(DataBase db){
             String query = "DELETE FROM Users WHERE userID = ?";
             db.executeUpdate(query, this.userID);
-        }*/
+        }
 }
