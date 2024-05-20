@@ -1,13 +1,15 @@
 package com.example.cybooks.model;
+import com.example.cybooks.api.ApiConnector;
 import com.example.cybooks.exception.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class LibraryManager {
     private DataBase db;
-
+    private ApiConnector apiConnector;
     public LibraryManager(DataBase db) {
         this.db = db;
     }
@@ -257,7 +259,9 @@ public class LibraryManager {
     }
 
     public boolean isbnExistsInBNF(String isbn) { //Should be implemented in the future with BNF API
-        return true;
+        List<BookApi> bibBooks = apiConnector.searchByISBN("bib", isbn);
+        List<BookApi> autBooks = apiConnector.searchByISBN("aut", isbn);
+        return !bibBooks.isEmpty() || !autBooks.isEmpty();
     }
 
     private BookCopies getAvailableCopyByISBN(String isbn) {
@@ -363,11 +367,19 @@ public class LibraryManager {
 
 
     public String searchBook(String isbn) throws BookNotFoundException {
-        if (isbn=="") {
+        if (isbn.isEmpty()) {
             throw new BookNotFoundException("Book not found: " + isbn);
         }
-
-        return "INFORMATION ABOUT THE BOOK";
+        List<BookApi> book = apiConnector.searchByISBN("bib", isbn);
+        List<BookApi> book2 = apiConnector.searchByISBN("aut", isbn);
+        if (!book.isEmpty()) {
+            BookApi bookApi = book.getFirst();
+            return bookApi.toString();
+        }else if (!book2.isEmpty()) {
+            BookApi bookApi2 = book2.getFirst();
+            return bookApi2.toString();
+        }
+        throw new BookNotFoundException("Book not found: " + isbn);
     }
 
     public String mostLoanedBooksLast30d() {

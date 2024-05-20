@@ -117,4 +117,13 @@ public class BookApi {
     public String getIsbn() {
         return isbn;
     }
+
+    public String toString(BookApi book){
+        StringBuilder authors = new StringBuilder();
+        for(String author : book.getAuthors()){
+            authors.append(author).append(";");
+        }
+
+        return "Title : " + book.getTitle() + "\nAuthors : " + authors + "\nISBN : "+ book.getIsbn() + "\n Publisher : " + book.getPublisher() + "\nDate : " + book.getDate();
+    }
 }

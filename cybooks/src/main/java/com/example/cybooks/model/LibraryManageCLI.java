@@ -249,7 +249,7 @@ public class LibraryManageCLI  {
         } catch (BookNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
         }
-    }
+    }   
 
     private void printAllLoans() { //Done
         String result = libraryManager.viewLoans(false, false);

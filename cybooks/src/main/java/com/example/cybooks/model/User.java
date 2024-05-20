@@ -1,8 +1,5 @@
 package com.example.cybooks.model;
 
-public class User {
-}
-package com.example.cybooks.model;
 
 /**
  * Represents a library user.
@@ -67,7 +64,7 @@ public class User {
      * @param name The user's name.
      */
 
-    public void setName(){
+    public void setName(String name){
         this.name = name;
     }
 

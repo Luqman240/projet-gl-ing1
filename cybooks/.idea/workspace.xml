@@ -5,19 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc1e4d23-d7a7-4bbf-beb6-8154d28926d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ParseXML.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BookApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/BookNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/EmailAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/InvalidEmailFormatException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/NoCopyAvailableException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/NoCopyForTheBookException" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/exception/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BNFApiConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/Book.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BookCopies.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/DataBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/JdbcVersion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/LibraryManageCLI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/LibraryManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/Loan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ApiConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/api/ApiConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BookApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/BookApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/cybooks/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/BNFApiConnector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/api/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/Book.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/cybooks/utils/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/cybooks/utils/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +68,7 @@
     &quot;Application.ParseXML.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Luqman&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging Luqman&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/lsaid/Desktop/jaxb-api-2.2.jar&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -104,7 +112,9 @@
       <workItem from="1715928456684" duration="8310000" />
       <workItem from="1716041401153" duration="1394000" />
       <workItem from="1716046707202" duration="11140000" />
-      <workItem from="1716133360125" duration="4580000" />
+      <workItem from="1716133360125" duration="5928000" />
+      <workItem from="1716154947585" duration="1501000" />
+      <workItem from="1716223334433" duration="442000" />
     </task>
     <servers />
   </component>
