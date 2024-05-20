@@ -1,8 +1,10 @@
-package com.example.cybooks.model;
+package com.example.cybooks.gui;
 
 
 import com.example.cybooks.exception.*;
-
+import com.example.cybooks.manager.LibraryManager;
+import com.example.cybooks.model.DataBase;
+import com.example.cybooks.model.User;
 
 import java.util.Scanner;
 import java.time.LocalDate;
