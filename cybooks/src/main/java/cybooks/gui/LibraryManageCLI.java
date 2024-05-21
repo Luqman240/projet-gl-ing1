@@ -1,6 +1,10 @@
-package cybooks.model;
+package cybooks.gui;
 
 import cybooks.exception.*;
+import cybooks.manager.LibraryManager;
+import cybooks.model.DataBase;
+import cybooks.model.User;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.LocalDate;

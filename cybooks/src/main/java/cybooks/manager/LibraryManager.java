@@ -1,7 +1,13 @@
-package cybooks.model;
+package cybooks.manager;
 
 import cybooks.api.ApiConnector;
 import cybooks.exception.*;
+import cybooks.model.Book;
+import cybooks.model.BookCopies;
+import cybooks.model.DataBase;
+import cybooks.model.Loan;
+import cybooks.model.User;
+import cybooks.model.BookApi;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
