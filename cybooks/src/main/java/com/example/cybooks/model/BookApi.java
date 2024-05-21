@@ -118,12 +118,12 @@ public class BookApi {
         return isbn;
     }
 
-    public String toString(BookApi book){
+    @Override
+    public String toString() {
         StringBuilder authors = new StringBuilder();
-        for(String author : book.getAuthors()){
+        for(String author : this.getAuthors()){
             authors.append(author).append(";");
         }
-
-        return "Title : " + book.getTitle() + "\nAuthors : " + authors + "\nISBN : "+ book.getIsbn() + "\n Publisher : " + book.getPublisher() + "\nDate : " + book.getDate();
+        return "Title : " + this.getTitle() + "\nAuthors : " + authors + "\nISBN : "+ this.getIsbn() + "\nPublisher : " + this.getPublisher() + "\nDate : " + this.getDate();
     }
 }

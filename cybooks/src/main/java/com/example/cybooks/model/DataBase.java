@@ -14,7 +14,7 @@ public class DataBase {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/";
     private static final String DATABASE_NAME = "cybooks";
     private static final String USER = "root";
-    private static final String PASSWORD = ""; 
+    private static final String PASSWORD = "Luqman@123";
     private Connection connection;
 
     /**

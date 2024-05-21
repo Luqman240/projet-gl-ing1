@@ -8,10 +8,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class LibraryManager {
-    private DataBase db;
-    private ApiConnector apiConnector;
+    private final DataBase db;
+    private final ApiConnector apiConnector;
     public LibraryManager(DataBase db) {
         this.db = db;
+        this.apiConnector = new ApiConnector();
     }
 
     public void closeDatabase() {
@@ -370,13 +371,13 @@ public class LibraryManager {
         if (isbn.isEmpty()) {
             throw new BookNotFoundException("Book not found: " + isbn);
         }
-        List<BookApi> book = apiConnector.searchByISBN("bib", isbn);
-        List<BookApi> book2 = apiConnector.searchByISBN("aut", isbn);
-        if (!book.isEmpty()) {
-            BookApi bookApi = book.getFirst();
+        List<BookApi> books = apiConnector.searchByISBN("bib", isbn);
+        List<BookApi> books2 = apiConnector.searchByISBN("aut", isbn);
+        if (!books.isEmpty()) {
+            BookApi bookApi = books.getFirst();
             return bookApi.toString();
-        }else if (!book2.isEmpty()) {
-            BookApi bookApi2 = book2.getFirst();
+        }else if (!books2.isEmpty()) {
+            BookApi bookApi2 = books2.getFirst();
             return bookApi2.toString();
         }
         throw new BookNotFoundException("Book not found: " + isbn);
