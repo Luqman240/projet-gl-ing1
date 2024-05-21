@@ -1,4 +1,4 @@
-package com.example.cybooks.gui;
+package cybooks.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
