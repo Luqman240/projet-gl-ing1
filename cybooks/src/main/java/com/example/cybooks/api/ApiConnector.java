@@ -1,13 +1,14 @@
 package com.example.cybooks.api;
 import com.example.cybooks.model.BookApi;
+
+import static com.example.cybooks.api.Config.API_BASE_URL;
+
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import static com.example.cybooks.utils.Config.API_BASE_URL;
 
 public class ApiConnector {
 
