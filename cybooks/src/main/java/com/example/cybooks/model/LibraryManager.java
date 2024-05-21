@@ -367,7 +367,7 @@ public class LibraryManager {
     }
 
 
-    public String searchBook(String isbn) throws BookNotFoundException {
+    /*public String searchBook(String isbn) throws BookNotFoundException {
         if (isbn.isEmpty()) {
             throw new BookNotFoundException("Book not found: " + isbn);
         }
@@ -381,6 +381,43 @@ public class LibraryManager {
             return bookApi2.toString();
         }
         throw new BookNotFoundException("Book not found: " + isbn);
+    }
+    */
+
+    public String searchBook(String searchTerm, String searchType) throws BookNotFoundException {
+        if (searchTerm.isEmpty()) {
+            throw new BookNotFoundException("Search term cannot be empty.");
+        }
+
+        List<BookApi> books;
+        List<BookApi> books2;
+
+        switch (searchType.toLowerCase()) {
+            case "isbn":
+                books = apiConnector.searchByISBN("bib",searchTerm);
+                books2 = apiConnector.searchByISBN("aut", searchTerm);
+                break;
+            case "title":
+                books = apiConnector.searchByTitle("bib",searchTerm);
+                books2 = apiConnector.searchByTitle("aut", searchTerm);
+                break;
+            case "author":
+                books = apiConnector.searchByAuthor("bib",searchTerm);
+                books2 = apiConnector.searchByAuthor("aut", searchTerm);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid search type: " + searchType);
+        }
+
+        if (!books.isEmpty()) {
+            BookApi bookApi = books.getFirst(); // assuming the first result is what we want
+            return bookApi.toString();
+        }else if (!books2.isEmpty()) {
+            BookApi bookApi2 = books2.getFirst();
+            return bookApi2.toString();
+        }
+
+        throw new BookNotFoundException("Book not found: " + searchTerm);
     }
 
     public String mostLoanedBooksLast30d() {

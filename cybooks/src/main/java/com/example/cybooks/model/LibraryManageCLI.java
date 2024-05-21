@@ -88,7 +88,7 @@ public class LibraryManageCLI  {
         System.out.println("4. Lend a book.");
         System.out.println("5. Return a book.");
         System.out.println("6. Search for a User");
-        System.out.println("7. Search for a book information.");
+        System.out.println("7. Search for a book information, with criteria.");
         System.out.println("8. Print all loans.");
         System.out.println("9. Print overdue loans.");
         System.out.println("10. Print a user's profile.");
@@ -249,17 +249,44 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void searchBook(Scanner scanner) { //Pending BNF API methods
-        System.out.print("Enter ISBN: ");
-        String isbn = scanner.nextLine();
+    private void searchBook(Scanner scanner) {
+        System.out.println("Choose search type: ");
+        System.out.println("1. ISBN");
+        System.out.println("2. Title");
+        System.out.println("3. Author");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();  // Consumes the newline left by nextInt
+
+        String searchType;
+        switch (choice) {
+            case 1:
+                searchType = "isbn";
+                System.out.print("Enter ISBN: ");
+                break;
+            case 2:
+                searchType = "title";
+                System.out.print("Enter Title (Don't put emphasis): ");
+                break;
+            case 3:
+                searchType = "author";
+                System.out.print("Enter Author: ");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                return;
+        }
+
+        String searchTerm = scanner.nextLine();
 
         try {
-            String result = libraryManager.searchBook(isbn);
+            String result = libraryManager.searchBook(searchTerm, searchType);
             System.out.println(result);
         } catch (BookNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
 
     private void printAllLoans() { //Done
         String result = libraryManager.viewLoans(false, false);
