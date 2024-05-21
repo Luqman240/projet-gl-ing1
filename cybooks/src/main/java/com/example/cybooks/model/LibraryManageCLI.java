@@ -1,6 +1,10 @@
 package com.example.cybooks.model;
 
+
 import com.example.cybooks.exception.*;
+
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.LocalDate;
 
@@ -74,7 +78,6 @@ public class LibraryManageCLI  {
                 }
             }
             scanner.close();
-            db.stopServer();
         }
 
     private void printMenu(){
@@ -145,7 +148,7 @@ public class LibraryManageCLI  {
         try {
             libraryManager.deleteUser(userID);
             System.out.println("User deleted successfully.");
-        } catch (UserNotFoundException | UserHasLoansException e) {
+        } catch (UserNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -174,18 +177,26 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void returnBook(Scanner scanner){ //Done
+    private void returnBook(Scanner scanner) {
         System.out.print("Enter user ID: ");
-        int userID = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        int userID = 0;
+        try {
+            userID = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. User ID must be an integer.");
+            scanner.nextLine();  // Consume the invalid input
+            return;
+        }
 
         if (!libraryManager.userExists(userID)) {
             System.out.println("User not found.");
             return;
         }
-        
-        System.out.print("Enter ISBN of the loaned book :");
+
+        System.out.print("Enter ISBN of the loaned book: ");
         String isbn = scanner.nextLine();
+        System.out.println(isbn);  // Print the entered ISBN
 
         try {
             libraryManager.returnBook(userID, isbn);
@@ -194,6 +205,7 @@ public class LibraryManageCLI  {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
 
     private void searchUser(Scanner scanner) {
         System.out.print("How do you want to search for the user ?\n1. By ID\n2. By email\nEnter your choice :");
