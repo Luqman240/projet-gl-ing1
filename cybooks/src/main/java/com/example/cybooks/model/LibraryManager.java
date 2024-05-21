@@ -1,15 +1,22 @@
 package com.example.cybooks.model;
+import com.example.cybooks.api.ApiConnector;
 import com.example.cybooks.exception.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class LibraryManager {
-    private DataBase db;
-
+    private final DataBase db;
+    private final ApiConnector apiConnector;
     public LibraryManager(DataBase db) {
         this.db = db;
+        this.apiConnector = new ApiConnector();
+    }
+
+    public void closeDatabase() {
+        db.stopServer();    
     }
 
     public void registerUser(String name, String email, String address) throws InvalidEmailFormatException, EmailAlreadyExistsException {
@@ -52,15 +59,12 @@ public class LibraryManager {
         user.update(db);
     }
 
-    public void deleteUser(int userID) throws UserNotFoundException, UserHasLoansException{
+    public void deleteUser(int userID) throws UserNotFoundException {
         User user = getUserByID(userID);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
-        
-        if (isLoansExistsForUsers(userID)) {
-            throw new UserHasLoansException("User has loans" );
-        }
+
         user.delete(db);
     }
 
@@ -78,7 +82,7 @@ public class LibraryManager {
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
-
+        
         if (!isISBNExistsInCopies(isbn)) {
             this.addBook(isbn, 5);
         }
@@ -256,7 +260,9 @@ public class LibraryManager {
     }
 
     public boolean isbnExistsInBNF(String isbn) { //Should be implemented in the future with BNF API
-        return true;
+        List<BookApi> bibBooks = apiConnector.searchByISBN("bib", isbn);
+        List<BookApi> autBooks = apiConnector.searchByISBN("aut", isbn);
+        return !bibBooks.isEmpty() || !autBooks.isEmpty();
     }
 
     private BookCopies getAvailableCopyByISBN(String isbn) {
@@ -289,6 +295,18 @@ public class LibraryManager {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getLoanIDbyUserAndBookID(int userID, int copyID) {
+        ResultSet rs = db.executeQuery("SELECT loanID FROM Loans WHERE userID = ? AND copyID = ? AND isReturned = FALSE", userID, copyID);
+        try {
+            if (rs != null && rs.next()) {
+                return rs.getInt("loanID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private Loan getLoanByID(int loanID) {
@@ -350,11 +368,19 @@ public class LibraryManager {
 
 
     public String searchBook(String isbn) throws BookNotFoundException {
-        if (isbn=="") {
+        if (isbn.isEmpty()) {
             throw new BookNotFoundException("Book not found: " + isbn);
         }
-
-        return "INFORMATION ABOUT THE BOOK";
+        List<BookApi> books = apiConnector.searchByISBN("bib", isbn);
+        List<BookApi> books2 = apiConnector.searchByISBN("aut", isbn);
+        if (!books.isEmpty()) {
+            BookApi bookApi = books.getFirst();
+            return bookApi.toString();
+        }else if (!books2.isEmpty()) {
+            BookApi bookApi2 = books2.getFirst();
+            return bookApi2.toString();
+        }
+        throw new BookNotFoundException("Book not found: " + isbn);
     }
 
     public String mostLoanedBooksLast30d() {
@@ -378,18 +404,8 @@ public class LibraryManager {
         return result.toString();
     }
 
-    private boolean isLoansExistsForUsers(int userID) {
-        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Loans WHERE userID = ? AND isReturned = FALSE", userID);
-        try {
-            if (rs != null && rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
+    
 }
 
        
