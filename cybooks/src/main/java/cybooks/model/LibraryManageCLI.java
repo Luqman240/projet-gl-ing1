@@ -1,52 +1,54 @@
 package cybooks.model;
 
-
 import cybooks.exception.*;
-
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.LocalDate;
 
 /**
- * This class aims to give a command line interface to interact with the project.
- * It represents the step before the development of a graphic interface using JavaFX.
+ * This class provides a command line interface to interact with the library management system.
+ * It serves as a precursor to the development of a graphical interface using JavaFX.
  */
-
-public class LibraryManageCLI  {
+public class LibraryManageCLI {
     private DataBase db;
     private LibraryManager libraryManager;
 
+    /**
+     * Constructor to initialize the database and library manager.
+     */
     public LibraryManageCLI() {
         db = new DataBase();
         db.startServer();
         libraryManager = new LibraryManager(db);
     }
 
-    public void run(){
+    /**
+     * Main method to run the command line interface.
+     */
+    public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
 
-        while(!exit){
+        while (!exit) {
             printMenu();
-            System.out.println("Enter your choice :");
+            System.out.println("Enter your choice:");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice){
-                case 1 :
+            switch (choice) {
+                case 1:
                     registerUser(scanner);
                     break;
-                case 2 :
+                case 2:
                     updateUser(scanner);
                     break;
-                case 3 :
+                case 3:
                     deleteUser(scanner);
                     break;
-                case 4 :
+                case 4:
                     loanBook(scanner);
                     break;
-                case 5 :
+                case 5:
                     returnBook(scanner);
                     break;
                 case 6:
@@ -75,13 +77,16 @@ public class LibraryManageCLI  {
                     break;
                 default:
                     System.out.println("Invalid choice, please try again.");
-                }
             }
-            scanner.close();
         }
+        scanner.close();
+    }
 
-    private void printMenu(){
-        System.out.println("\nCY-Books Library Manager :");
+    /**
+     * Prints the menu options to the console.
+     */
+    private void printMenu() {
+        System.out.println("\nCY-Books Library Manager:");
         System.out.println("1. Register a new user.");
         System.out.println("2. Update a user's information.");
         System.out.println("3. Delete a user.");
@@ -93,11 +98,16 @@ public class LibraryManageCLI  {
         System.out.println("9. Print overdue loans.");
         System.out.println("10. Print a user's profile.");
         System.out.println("11. Print all books loaned.");
-        System.out.println("12. Print most loaned books on the last 30 days.");
+        System.out.println("12. Print most loaned books in the last 30 days.");
         System.out.println("13. Exit.");
     }
 
-    private void registerUser(Scanner scanner) { //done
+    /**
+     * Registers a new user.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void registerUser(Scanner scanner) {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
         System.out.print("Enter email: ");
@@ -113,7 +123,12 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void updateUser(Scanner scanner){ //done
+    /**
+     * Updates a user's information.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void updateUser(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -140,7 +155,12 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void deleteUser(Scanner scanner){ // done + we need to add loan verification
+    /**
+     * Deletes a user.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void deleteUser(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -153,7 +173,12 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void loanBook(Scanner scanner){ //Done
+    /**
+     * Lends a book to a user.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void loanBook(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -177,6 +202,11 @@ public class LibraryManageCLI  {
         }
     }
 
+    /**
+     * Returns a book for a user.
+     *
+     * @param scanner the Scanner object for input
+     */
     private void returnBook(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = 0;
@@ -206,9 +236,13 @@ public class LibraryManageCLI  {
         }
     }
 
-
+    /**
+     * Searches for a user by ID or email.
+     *
+     * @param scanner the Scanner object for input
+     */
     private void searchUser(Scanner scanner) {
-        System.out.print("How do you want to search for the user ?\n1. By ID\n2. By email\nEnter your choice :");
+        System.out.print("How do you want to search for the user?\n1. By ID\n2. By email\nEnter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
 
@@ -224,7 +258,12 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void searchUserByID(Scanner scanner) { //Done
+    /**
+     * Searches for a user by ID.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void searchUserByID(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = scanner.nextInt();
         scanner.nextLine();  // Consume newline
@@ -237,7 +276,12 @@ public class LibraryManageCLI  {
         }
     }
 
-    private void searchUserByEmail(Scanner scanner) { //Done
+    /**
+     * Searches for a user by email.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void searchUserByEmail(Scanner scanner) {
         System.out.print("Enter user email: ");
         String email = scanner.nextLine();
 
@@ -249,14 +293,19 @@ public class LibraryManageCLI  {
         }
     }
 
+    /**
+     * Searches for a book by ISBN, title, or author.
+     *
+     * @param scanner the Scanner object for input
+     */
     private void searchBook(Scanner scanner) {
-        System.out.println("Choose search type: ");
+        System.out.println("Choose search type:");
         System.out.println("1. ISBN");
         System.out.println("2. Title");
         System.out.println("3. Author");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine();  // Consumes the newline left by nextInt
+        scanner.nextLine();  // Consume the newline left by nextInt
 
         String searchType;
         switch (choice) {
@@ -287,14 +336,21 @@ public class LibraryManageCLI  {
         }
     }
 
-
-    private void printAllLoans() { //Done
+    /**
+     * Prints all loans.
+     */
+    private void printAllLoans() {
         String result = libraryManager.viewLoans(false, false);
         System.out.println(result);
     }
 
-    private void printOverdueLoans(Scanner scanner) { //Done
-        System.out.print("Today's date is : ");
+    /**
+     * Prints overdue loans.
+     *
+     * @param scanner the Scanner object for input
+     */
+    private void printOverdueLoans(Scanner scanner) {
+        System.out.print("Today's date is: ");
         System.out.println(LocalDate.now());
 
         try {
@@ -306,6 +362,11 @@ public class LibraryManageCLI  {
         }
     }
 
+    /**
+     * Prints a user's profile including their loans.
+     *
+     * @param scanner the Scanner object for input
+     */
     private void printUserProfile(Scanner scanner) {
         System.out.print("Enter user ID: ");
         int userID = scanner.nextInt();
@@ -315,9 +376,9 @@ public class LibraryManageCLI  {
             User user = libraryManager.searchUser(userID);
             String userLoans = libraryManager.getUserLoans(userID);
 
-            System.out.println("\nHere are the user's informations :");
+            System.out.println("\nHere are the user's informations:");
             System.out.println(user.toString() + "\n");
-            System.out.println("Here are the user's loans :");
+            System.out.println("Here are the user's loans:");
             System.out.println(userLoans);
 
         } catch (UserNotFoundException e) {
@@ -325,24 +386,31 @@ public class LibraryManageCLI  {
         }
     }
 
+    /**
+     * Prints all books that are currently loaned.
+     */
     private void printAllBookLoaned() {
-
-        System.out.println("Here are all the books currently loaned :");
+        System.out.println("Here are all the books currently loaned:");
         String result = libraryManager.viewLoans(true, false);
         System.out.println(result);
     }
 
-    private void printMostLoanedBooksLast30d(){
-        System.out.println("Here are the 5 most loaned books in the last 30 days :");
+    /**
+     * Prints the most loaned books in the last 30 days.
+     */
+    private void printMostLoanedBooksLast30d() {
+        System.out.println("Here are the 5 most loaned books in the last 30 days:");
         String result = libraryManager.mostLoanedBooksLast30d();
         System.out.println(result);
     }
 
-
-    // Main method to run the CLI
+    /**
+     * Main method to run the CLI.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         LibraryManageCLI cli = new LibraryManageCLI();
         cli.run();
     }
-
 }

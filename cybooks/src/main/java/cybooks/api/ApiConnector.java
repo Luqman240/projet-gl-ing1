@@ -10,12 +10,25 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * A class responsible for connecting to an external API to search for books.
+ */
 public class ApiConnector {
 
+    /**
+     * Default constructor for the ApiConnector class.
+     */
     public ApiConnector(){
 
     }
 
+    /**
+     * Searches for books by author using the provided record type and author name.
+     *
+     * @param recordType The type of record to search for (e.g., "bib" or "aut").
+     * @param author     The name of the author to search for.
+     * @return A list of BookApi objects representing the books found.
+     */
     public List<BookApi> searchByAuthor(String recordType, String author){
         String url = API_BASE_URL;
         String encodedQuery = "";
@@ -34,6 +47,13 @@ public class ApiConnector {
         return this.get(url);
     }
 
+    /**
+     * Searches for books by ISBN using the provided record type and ISBN number.
+     *
+     * @param recordType The type of record to search for (e.g., "bib" or "aut").
+     * @param isbn       The ISBN number of the book to search for.
+     * @return A list of BookApi objects representing the books found.
+     */
     public List<BookApi> searchByISBN(String recordType, String isbn){
         String url = API_BASE_URL;
         String encodedQuery = "";
@@ -52,6 +72,13 @@ public class ApiConnector {
         return this.get(url);
     }
 
+    /**
+     * Searches for books by title using the provided record type and title.
+     *
+     * @param recordType The type of record to search for (e.g., "bib" or "aut").
+     * @param title      The title of the book to search for.
+     * @return A list of BookApi objects representing the books found.
+     */
     public List<BookApi> searchByTitle(String recordType, String title){
         String url = API_BASE_URL;
         String encodedQuery = "";
@@ -71,7 +98,12 @@ public class ApiConnector {
         return this.get(url);
     }
 
-
+    /**
+     * Executes an HTTP GET request to the specified API URL and parses the XML response.
+     *
+     * @param apiUrl The URL of the API to connect to.
+     * @return A list of BookApi objects representing the books found.
+     */
     private List<BookApi> get(String apiUrl){
         ParseXML parser = new ParseXML();
         try{

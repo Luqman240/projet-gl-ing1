@@ -1,4 +1,5 @@
 package cybooks.model;
+
 import cybooks.api.ApiConnector;
 import cybooks.exception.*;
 
@@ -7,18 +8,40 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Manages the operations related to the library, including user registration,
+ * book loans, and database interactions.
+ */
 public class LibraryManager {
     private final DataBase db;
     private final ApiConnector apiConnector;
+
+    /**
+     * Constructs a LibraryManager with the given database connection.
+     *
+     * @param db the database connection object
+     */
     public LibraryManager(DataBase db) {
         this.db = db;
         this.apiConnector = new ApiConnector();
     }
 
+    /**
+     * Closes the database connection.
+     */
     public void closeDatabase() {
         db.stopServer();    
     }
 
+    /**
+     * Registers a new user in the library system.
+     *
+     * @param name    the name of the user
+     * @param email   the email address of the user
+     * @param address the address of the user
+     * @throws InvalidEmailFormatException if the email format is invalid
+     * @throws EmailAlreadyExistsException if the email already exists in the system
+     */
     public void registerUser(String name, String email, String address) throws InvalidEmailFormatException, EmailAlreadyExistsException {
         if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new InvalidEmailFormatException("Invalid email format: " + email);
@@ -32,6 +55,17 @@ public class LibraryManager {
         user.register(db);
     }
 
+    /**
+     * Updates the information of an existing user.
+     *
+     * @param userID  the ID of the user to update
+     * @param name    the new name of the user
+     * @param email   the new email address of the user
+     * @param address the new address of the user
+     * @throws UserNotFoundException       if the user is not found
+     * @throws InvalidEmailFormatException if the email format is invalid
+     * @throws EmailAlreadyExistsException if the email already exists in the system
+     */
     public void updateUser(int userID, String name, String email, String address) throws UserNotFoundException, InvalidEmailFormatException, EmailAlreadyExistsException {
         User user = getUserByID(userID);
         if (user == null) {
@@ -59,20 +93,33 @@ public class LibraryManager {
         user.update(db);
     }
 
-    public void deleteUser(int userID) throws UserNotFoundException, UserHasLoansException{
+    /**
+     * Deletes a user from the library system.
+     *
+     * @param userID the ID of the user to delete
+     * @throws UserNotFoundException  if the user is not found
+     * @throws UserHasLoansException if the user has outstanding loans
+     */
+    public void deleteUser(int userID) throws UserNotFoundException, UserHasLoansException {
         User user = getUserByID(userID);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
-        if(isLoansExistsForUsers(userID)) {
+        if (isLoansExistsForUsers(userID)) {
             throw new UserHasLoansException("User has loans and cannot be deleted");
         }
 
         user.delete(db);
     }
 
+    /**
+     * Adds a new book to the library's collection.
+     *
+     * @param isbn            the ISBN of the book
+     * @param copiesAvailable the number of copies available
+     */
     public void addBook(String isbn, int copiesAvailable) {
-        Book book = new Book(isbn, copiesAvailable) ;
+        Book book = new Book(isbn, copiesAvailable);
         book.register(db);
         for (int i = 0; i < copiesAvailable; i++) {
             BookCopies copy = new BookCopies(isbn);
@@ -80,6 +127,14 @@ public class LibraryManager {
         }
     }
 
+    /**
+     * Loans a book to a user.
+     *
+     * @param userID the ID of the user
+     * @param isbn   the ISBN of the book
+     * @throws UserNotFoundException  if the user is not found
+     * @throws NoCopyAvailableException if no copy of the book is available
+     */
     public void loanBook(int userID, String isbn) throws UserNotFoundException, NoCopyAvailableException {
         User user = getUserByID(userID);
         if (user == null) {
@@ -94,13 +149,13 @@ public class LibraryManager {
         if (copy == null) {
             throw new NoCopyAvailableException("No copy available for ISBN: " + isbn);
         }
-    
+
         Loan loan = new Loan(userID, copy.getCopyID());
         loan.register(db);
         copy.setLoaned(true);
         copy.update(db);
 
-        // Decrease number of copiesAvailable :
+        // Decrease number of copies available
         ResultSet rs = db.executeQuery("SELECT copiesAvailable FROM Books WHERE isbn = ?", isbn);
         try {
             if (rs != null && rs.next()) {
@@ -113,21 +168,20 @@ public class LibraryManager {
     }
 
     /**
-     * Get Loan by UserID and ISBN.
-     * Be careful : a user can have multiple loans for the same book.
-     * 
-     * @param userID
-     * @param copyID
-     * @return The loan if it exists, null otherwise.
+     * Retrieves a loan by user ID and ISBN.
+     * Note: a user can have multiple loans for the same book.
+     *
+     * @param userID the ID of the user
+     * @param isbn   the ISBN of the book
+     * @return the loan if it exists, null otherwise
      */
-
-     public Loan getLoanByUserAndISBN(int userID, String isbn) {
+    public Loan getLoanByUserAndISBN(int userID, String isbn) {
         ResultSet rs = db.executeQuery("SELECT l.loanID FROM Loans l " +
                 "JOIN BookCopies bc ON l.copyID = bc.copyID " +
                 "WHERE l.userID = ? AND bc.isbn = ? AND l.isReturned = FALSE LIMIT 1", userID, isbn);
         try {
             if (rs != null && rs.next()) {
-                int  loanID = rs.getInt("loanID");
+                int loanID = rs.getInt("loanID");
                 return getLoanByID(loanID);
             }
         } catch (SQLException e) {
@@ -136,6 +190,13 @@ public class LibraryManager {
         return null;
     }
 
+    /**
+     * Returns a book that was loaned out.
+     *
+     * @param userID the ID of the user
+     * @param isbn   the ISBN of the book
+     * @throws Exception if the loan is not found or another error occurs
+     */
     public void returnBook(int userID, String isbn) throws Exception {
         Loan loan = getLoanByUserAndISBN(userID, isbn);
         if (loan == null) {
@@ -150,7 +211,7 @@ public class LibraryManager {
         copy.setLoaned(false);
         copy.update(db);
 
-        // Increase number of copiesAvailable :
+        // Increase number of copies available
         ResultSet rs = db.executeQuery("SELECT copiesAvailable FROM Books WHERE isbn = ?", isbn);
         try {
             if (rs != null && rs.next()) {
@@ -162,6 +223,13 @@ public class LibraryManager {
         }
     }
 
+    /**
+     * Views loans in the library.
+     *
+     * @param onlyCurrentlyLoaned whether to view only currently loaned books
+     * @param onlyOverdueLoans    whether to view only overdue loans
+     * @return a string representation of the loans
+     */
     public String viewLoans(boolean onlyCurrentlyLoaned, boolean onlyOverdueLoans) {
         StringBuilder result = new StringBuilder();
         String query = "SELECT l.loanID, u.name, b.isbn, l.loanDate, l.dueDate, l.isReturned FROM Loans l " +
@@ -188,6 +256,12 @@ public class LibraryManager {
         return result.toString();
     }
 
+    /**
+     * Retrieves the loans of a user identified by the given user ID.
+     *
+     * @param userID The ID of the user whose loans are to be retrieved.
+     * @return A string representing the user's loans.
+    */
     public String getUserLoans(int userID) {
         StringBuilder result = new StringBuilder();
         String query = "SELECT l.loanID, b.isbn, l.loanDate, l.dueDate, l.isReturned FROM Loans l " +
@@ -211,6 +285,12 @@ public class LibraryManager {
         return result.toString();
     }
 
+    /**
+     * Checks if a user with the specified ID exists in the database.
+     *
+     * @param userID The ID of the user to check for existence.
+     * @return True if the user exists, false otherwise.
+     */
     public boolean userExists(int userID) {
         ResultSet rs = db.executeQuery("SELECT 1 FROM Users WHERE userID = ?", userID);
         try {
@@ -221,6 +301,12 @@ public class LibraryManager {
         return false;
     }
 
+    /**
+     * Retrieves the user information associated with the given user ID.
+     *
+     * @param userID The ID of the user to retrieve information for.
+     * @return The user object containing the user's information, or null if not found.
+     */
     private User getUserByID(int userID) {
         ResultSet rs = db.executeQuery("SELECT * FROM Users WHERE userID = ?", userID);
         try {
@@ -237,7 +323,13 @@ public class LibraryManager {
         }
         return null;
     }
-
+    
+    /**
+     * Checks if an email exists in the database.
+     *
+     * @param email The email to check for existence.
+     * @return True if the email exists, false otherwise.
+     */
     private boolean isEmailExists(String email) {
         ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Users WHERE email = ?", email);
         try {
@@ -250,6 +342,12 @@ public class LibraryManager {
         return false;
     }
 
+    /**
+     * Checks if an ISBN exists in the book copies table of the database.
+     *
+     * @param isbn The ISBN to check for existence.
+     * @return True if the ISBN exists, false otherwise.
+     */
     private boolean isISBNExistsInCopies(String isbn) {
         ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM BookCopies WHERE isbn = ?", isbn);
         try {
@@ -262,12 +360,24 @@ public class LibraryManager {
         return false;
     }
 
+    /**
+     * Checks if a given ISBN exists either in the "bib" or "aut" category of the BNF API.
+     *
+     * @param isbn The ISBN to check for existence.
+     * @return True if the ISBN exists in either category, false otherwise.
+     */
     public boolean isbnExistsInBNF(String isbn) { //Should be implemented in the future with BNF API
         List<BookApi> bibBooks = apiConnector.searchByISBN("bib", isbn);
         List<BookApi> autBooks = apiConnector.searchByISBN("aut", isbn);
         return !bibBooks.isEmpty() || !autBooks.isEmpty();
     }
 
+    /**
+     * Retrieves an available book copy by ISBN from the database.
+     *
+     * @param isbn The ISBN of the book copy to retrieve.
+     * @return The available book copy, or null if not found.
+     */
     private BookCopies getAvailableCopyByISBN(String isbn) {
         ResultSet rs = db.executeQuery("SELECT copyID FROM BookCopies WHERE isbn = ? AND isLoaned = FALSE LIMIT 1", isbn);
         try {
@@ -283,6 +393,12 @@ public class LibraryManager {
         return null;
     }
 
+    /**
+     * Retrieves a book copy by its ID from the database.
+     *
+     * @param copyID The ID of the book copy to retrieve.
+     * @return The book copy with the given ID, or null if not found.
+     */
     private BookCopies getCopyByID(int copyID) {
         ResultSet rs = db.executeQuery("SELECT * FROM BookCopies WHERE copyID = ?", copyID);
         try {
@@ -300,6 +416,13 @@ public class LibraryManager {
         return null;
     }
 
+    /**
+     * Retrieves the loan ID associated with a user and book copy from the database.
+     *
+     * @param userID The ID of the user.
+     * @param copyID The ID of the book copy.
+     * @return The loan ID if found, or -1 if not found.
+     */
     public int getLoanIDbyUserAndBookID(int userID, int copyID) {
         ResultSet rs = db.executeQuery("SELECT loanID FROM Loans WHERE userID = ? AND copyID = ? AND isReturned = FALSE", userID, copyID);
         try {
@@ -312,6 +435,12 @@ public class LibraryManager {
         return -1;
     }
 
+    /**
+     * Retrieves a loan by its ID from the database.
+     *
+     * @param loanID The ID of the loan to retrieve.
+     * @return The loan with the given ID, or null if not found.
+     */
     private Loan getLoanByID(int loanID) {
         ResultSet rs = db.executeQuery("SELECT * FROM Loans WHERE loanID = ?", loanID);
         try {
@@ -336,6 +465,12 @@ public class LibraryManager {
         return null;
     }
 
+    /**
+     * Retrieves a user by their email address from the database.
+     *
+     * @param email The email address of the user to retrieve.
+     * @return The user with the given email address, or null if not found.
+     */
     public User getUserByEmail(String email) {
         ResultSet rs = db.executeQuery("SELECT * FROM Users WHERE email = ?", email);
         try {
@@ -353,6 +488,13 @@ public class LibraryManager {
         return null;
     }
 
+    /**
+     * Searches for a user by their ID and throws a UserNotFoundException if not found.
+     *
+     * @param userID The ID of the user to search for.
+     * @return The user with the given ID.
+     * @throws UserNotFoundException If the user with the given ID is not found.
+     */
     public User searchUser(int userID) throws UserNotFoundException {
         User user = getUserByID(userID);
         if (user == null) {
@@ -361,6 +503,13 @@ public class LibraryManager {
         return user;
     }
 
+    /**
+     * Searches for a user by their email address and throws a UserNotFoundException if not found.
+     *
+     * @param email The email address of the user to search for.
+     * @return The user with the given email address.
+     * @throws UserNotFoundException If the user with the given email address is not found.
+     */
     public User searchUser(String email) throws UserNotFoundException {
         User user = getUserByEmail(email);
         if (user == null) {
@@ -369,24 +518,15 @@ public class LibraryManager {
         return user;
     }
 
-
-    /*public String searchBook(String isbn) throws BookNotFoundException {
-        if (isbn.isEmpty()) {
-            throw new BookNotFoundException("Book not found: " + isbn);
-        }
-        List<BookApi> books = apiConnector.searchByISBN("bib", isbn);
-        List<BookApi> books2 = apiConnector.searchByISBN("aut", isbn);
-        if (!books.isEmpty()) {
-            BookApi bookApi = books.getFirst();
-            return bookApi.toString();
-        }else if (!books2.isEmpty()) {
-            BookApi bookApi2 = books2.getFirst();
-            return bookApi2.toString();
-        }
-        throw new BookNotFoundException("Book not found: " + isbn);
-    }
-    */
-
+    /**
+     * Searches for a book based on the given search term and type, either ISBN, title, or author.
+     *
+     * @param searchTerm The term to search for (ISBN, title, or author).
+     * @param searchType The type of search to perform (ISBN, title, or author).
+     * @return A string representation of the found book.
+     * @throws BookNotFoundException If the book corresponding to the search term is not found.
+     * @throws IllegalArgumentException If an invalid search type is provided.
+     */
     public String searchBook(String searchTerm, String searchType) throws BookNotFoundException {
         if (searchTerm.isEmpty()) {
             throw new BookNotFoundException("Search term cannot be empty.");
@@ -423,6 +563,11 @@ public class LibraryManager {
         throw new BookNotFoundException("Book not found: " + searchTerm);
     }
 
+    /**
+     * Retrieves the most loaned books in the last 30 days from the database.
+     *
+     * @return A string containing information about the most loaned books.
+     */
     public String mostLoanedBooksLast30d() {
         StringBuilder result = new StringBuilder();
         String query = "SELECT b.isbn, COUNT(l.loanID) as loanCount FROM Loans l " +
@@ -443,6 +588,13 @@ public class LibraryManager {
         }
         return result.toString();
     }
+
+    /**
+     * Checks if there are existing loans for a given user.
+     *
+     * @param userID The ID of the user.
+     * @return True if loans exist for the user, false otherwise.
+     */
     private boolean isLoansExistsForUsers(int userID) {
         ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Loans WHERE userID = ? AND isReturned = FALSE", userID);
         try {

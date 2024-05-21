@@ -15,12 +15,25 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class to parse XML data and extract BookApi objects.
+ */
 public class ParseXML {
 
+    /**
+     * Constructs a new ParseXML instance.
+     */
     public ParseXML(){
 
     }
 
+    /**
+     * Parses the given XML string and extracts BookApi objects.
+     *
+     * @param xmlString The XML string to parse.
+     * @return A list of BookApi objects extracted from the XML.
+     * @throws RuntimeException If an error occurs during parsing.
+     */
     public List<BookApi> readXML(String xmlString) {
         List<BookApi> bookApis = new ArrayList<BookApi>();
         try {
