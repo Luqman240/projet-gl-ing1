@@ -59,10 +59,13 @@ public class LibraryManager {
         user.update(db);
     }
 
-    public void deleteUser(int userID) throws UserNotFoundException {
+    public void deleteUser(int userID) throws UserNotFoundException, UserHasLoansException{
         User user = getUserByID(userID);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
+        }
+        if(isLoansExistsForUsers(userID)) {
+            throw new UserHasLoansException("User has loans and cannot be deleted");
         }
 
         user.delete(db);
@@ -440,9 +443,17 @@ public class LibraryManager {
         }
         return result.toString();
     }
-
-
-    
+    private boolean isLoansExistsForUsers(int userID) {
+        ResultSet rs = db.executeQuery("SELECT COUNT(*) FROM Loans WHERE userID = ? AND isReturned = FALSE", userID);
+        try {
+            if (rs != null && rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 
        
