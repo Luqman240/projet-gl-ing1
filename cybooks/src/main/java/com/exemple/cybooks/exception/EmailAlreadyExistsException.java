@@ -1,4 +1,4 @@
-package cybooks.exception;
+package com.exemple.cybooks.exception;
 
 public class EmailAlreadyExistsException extends Exception {
     public EmailAlreadyExistsException(String message) {

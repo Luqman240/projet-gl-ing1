@@ -1,13 +1,20 @@
-package cybooks.manager;
+package com.exemple.cybooks.manager;
 
-import cybooks.api.ApiConnector;
-import cybooks.exception.*;
-import cybooks.model.Book;
-import cybooks.model.BookApi;
-import cybooks.model.BookCopies;
-import cybooks.model.DataBase;
-import cybooks.model.Loan;
-import cybooks.model.User;
+import com.exemple.cybooks.exception.EmailAlreadyExistsException;
+import com.exemple.cybooks.exception.InvalidEmailFormatException;
+import com.exemple.cybooks.exception.NoCopyAvailableException;
+import com.exemple.cybooks.exception.UserHasLoansException;
+import com.exemple.cybooks.exception.UserNotFoundException;
+import com.exemple.cybooks.exception.BookNotFoundException;
+
+import com.exemple.cybooks.model.Book;
+import com.exemple.cybooks.model.BookCopies;
+import com.exemple.cybooks.model.Loan;
+import com.exemple.cybooks.model.User;
+import com.exemple.cybooks.api.ApiConnector;
+import com.exemple.cybooks.model.DataBase;
+import com.exemple.cybooks.model.BookApi;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

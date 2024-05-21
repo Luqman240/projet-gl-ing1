@@ -1,6 +1,6 @@
-package cybooks.api;
+package com.exemple.cybooks.api;
 
-import cybooks.model.BookApi;
+import com.exemple.cybooks.model.BookApi;
 
 import java.util.List;
 

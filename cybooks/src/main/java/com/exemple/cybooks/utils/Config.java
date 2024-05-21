@@ -1,4 +1,4 @@
-package cybooks.utils;
+package com.exemple.cybooks.utils;
 
 /**
  * A utility class for storing configuration settings.

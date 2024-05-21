@@ -1,4 +1,4 @@
-package cybooks.model;
+package com.exemple.cybooks.model;
 
 import java.time.LocalDate;
 

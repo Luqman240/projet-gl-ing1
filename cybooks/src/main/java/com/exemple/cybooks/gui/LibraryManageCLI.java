@@ -1,9 +1,15 @@
-package cybooks.gui;
+package com.exemple.cybooks.gui;
 
-import cybooks.exception.*;
-import cybooks.manager.LibraryManager;
-import cybooks.model.DataBase;
-import cybooks.model.User;
+import com.exemple.cybooks.exception.UserNotFoundException;
+import com.exemple.cybooks.exception.UserHasLoansException;
+import com.exemple.cybooks.exception.InvalidEmailFormatException;
+import com.exemple.cybooks.exception.NoCopyAvailableException;
+import com.exemple.cybooks.exception.EmailAlreadyExistsException;
+import com.exemple.cybooks.exception.BookNotFoundException;
+import com.exemple.cybooks.model.User;
+import com.exemple.cybooks.model.DataBase;
+import com.exemple.cybooks.manager.LibraryManager;
+
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
