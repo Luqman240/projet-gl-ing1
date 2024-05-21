@@ -145,7 +145,7 @@ public class LibraryManageCLI  {
         try {
             libraryManager.deleteUser(userID);
             System.out.println("User deleted successfully.");
-        } catch (UserNotFoundException e) {
+        } catch (UserNotFoundException | UserHasLoansException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

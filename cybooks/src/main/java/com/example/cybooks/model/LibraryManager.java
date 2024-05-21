@@ -52,14 +52,14 @@ public class LibraryManager {
         user.update(db);
     }
 
-    public void deleteUser(int userID) throws UserNotFoundException{
+    public void deleteUser(int userID) throws UserNotFoundException, UserHasLoansException{
         User user = getUserByID(userID);
         if (user == null) {
             throw new UserNotFoundException("User not found: " + userID);
         }
         
         if (isLoansExistsForUsers(userID)) {
-            throw new UserNotFoundException("User has loans" );
+            throw new UserHasLoansException("User has loans" );
         }
         user.delete(db);
     }
