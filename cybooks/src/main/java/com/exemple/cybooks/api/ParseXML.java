@@ -1,10 +1,10 @@
-package cybooks.api;
+package com.exemple.cybooks.api;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
-import cybooks.model.BookApi;
+import com.exemple.cybooks.model.BookApi;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;

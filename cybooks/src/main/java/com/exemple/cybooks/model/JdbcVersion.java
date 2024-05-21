@@ -1,4 +1,4 @@
-package cybooks.model;
+package com.exemple.cybooks.model;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

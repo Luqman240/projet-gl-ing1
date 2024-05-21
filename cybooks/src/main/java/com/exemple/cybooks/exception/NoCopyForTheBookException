@@ -1,4 +1,4 @@
-package cybooks.exception;
+package com.company.exceptions;
 
 public class NoCopyForTheBookException extends Exception{
     public NoCopyAvailableException(String message) {

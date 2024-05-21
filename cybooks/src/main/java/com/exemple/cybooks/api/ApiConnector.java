@@ -1,7 +1,7 @@
-package cybooks.api;
-import  cybooks.model.BookApi;
+package com.exemple.cybooks.api;
+import  com.exemple.cybooks.model.BookApi;
 
-import static cybooks.utils.Config.API_BASE_URL;
+import static com.exemple.cybooks.utils.Config.API_BASE_URL;
 
 import java.net.*;
 import java.net.http.HttpClient;

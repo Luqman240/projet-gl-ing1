@@ -1,4 +1,4 @@
-package cybooks.model;
+package com.exemple.cybooks.model;
 
 /**
  * Represents a copy of a book in the library.
