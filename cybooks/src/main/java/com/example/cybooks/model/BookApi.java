@@ -1,4 +1,4 @@
-package cybooks.model;
+package com.example.cybooks.model;
 
 import java.util.ArrayList;
 import java.util.List;

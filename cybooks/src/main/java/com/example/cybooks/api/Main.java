@@ -1,8 +1,8 @@
-package cybooks.api;
-
-import cybooks.model.BookApi;
+package com.example.cybooks.api;
 
 import java.util.List;
+
+import com.example.cybooks.model.BookApi;
 
 /**
  * A class containing the main method to demonstrate the usage of the ApiConnector class.
