@@ -1,4 +1,4 @@
-package com.exemple.cybooks.exception;
+package com.example.cybooks.exception;
 
 public class UserNotFoundException extends Exception {
     public UserNotFoundException(String message) {

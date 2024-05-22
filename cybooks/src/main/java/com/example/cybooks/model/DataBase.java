@@ -1,4 +1,4 @@
-package com.exemple.cybooks.model;
+package com.example.cybooks.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

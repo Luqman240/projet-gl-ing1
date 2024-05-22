@@ -1,4 +1,4 @@
-package com.exemple.cybooks.gui;
+package com.example.cybooks.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
