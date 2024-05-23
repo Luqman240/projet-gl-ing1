@@ -20,10 +20,11 @@ public class LibraryApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(@SuppressWarnings("exports") Stage primaryStage) {
         // Initialize the LibraryManager with your database connection
         DataBase db = new DataBase(); // Assurez-vous de créer et de configurer votre base de données
         libraryManager = new LibraryManager(db);
+        db.startServer();
 
         primaryStage.setTitle("Library Management System");
 
