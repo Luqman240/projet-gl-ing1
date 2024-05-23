@@ -1,23 +1,23 @@
-package com.exemple.cybooks.manager;
-
-import com.exemple.cybooks.model.BookApi;
-import com.exemple.cybooks.model.Book;
-import com.exemple.cybooks.model.BookCopies;
-import com.exemple.cybooks.model.DataBase;
-import com.exemple.cybooks.model.Loan;
-import com.exemple.cybooks.model.User;
-import com.exemple.cybooks.api.ApiConnector;
-import com.exemple.cybooks.exception.EmailAlreadyExistsException;
-import com.exemple.cybooks.exception.InvalidEmailFormatException;
-import com.exemple.cybooks.exception.NoCopyAvailableException;
-import com.exemple.cybooks.exception.UserHasLoansException;
-import com.exemple.cybooks.exception.UserNotFoundException;
-import com.exemple.cybooks.exception.BookNotFoundException;
+package com.example.cybooks.manager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+
+import com.example.cybooks.api.ApiConnector;
+import com.example.cybooks.exception.BookNotFoundException;
+import com.example.cybooks.exception.EmailAlreadyExistsException;
+import com.example.cybooks.exception.InvalidEmailFormatException;
+import com.example.cybooks.exception.NoCopyAvailableException;
+import com.example.cybooks.exception.UserHasLoansException;
+import com.example.cybooks.exception.UserNotFoundException;
+import com.example.cybooks.model.Book;
+import com.example.cybooks.model.BookApi;
+import com.example.cybooks.model.BookCopies;
+import com.example.cybooks.model.DataBase;
+import com.example.cybooks.model.Loan;
+import com.example.cybooks.model.User;
 
 /**
  * Manages the operations related to the library, including user registration,

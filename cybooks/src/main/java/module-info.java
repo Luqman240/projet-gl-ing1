@@ -4,7 +4,7 @@ module com.example.cybooks {
     requires java.sql;
     requires java.net.http;
 
-    opens com.exemple.cybooks.gui to javafx.graphics;   
-    exports com.exemple.cybooks.gui;
+    opens com.example.cybooks.gui to javafx.graphics;   
+    exports com.example.cybooks.gui;
     
 }

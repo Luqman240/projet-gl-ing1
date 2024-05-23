@@ -1,7 +1,9 @@
-package com.exemple.cybooks.gui;
+package com.example.cybooks.gui;
 
-import com.exemple.cybooks.manager.LibraryManager;
-import com.exemple.cybooks.model.DataBase;
+import com.example.cybooks.manager.LibraryManager;
+import com.example.cybooks.model.DataBase;
+import com.example.cybooks.model.User;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.exemple.cybooks.model.User;
 
 public class LibraryApp extends Application {
     private LibraryManager libraryManager;

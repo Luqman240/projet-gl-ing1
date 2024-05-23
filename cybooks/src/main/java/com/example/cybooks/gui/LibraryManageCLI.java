@@ -1,18 +1,18 @@
-package com.exemple.cybooks.gui;
-
-import com.exemple.cybooks.exception.BookNotFoundException;
-import com.exemple.cybooks.exception.EmailAlreadyExistsException;
-import com.exemple.cybooks.exception.InvalidEmailFormatException;
-import com.exemple.cybooks.exception.NoCopyAvailableException;
-import com.exemple.cybooks.exception.UserHasLoansException;
-import com.exemple.cybooks.exception.UserNotFoundException;
-import com.exemple.cybooks.model.User;
-import com.exemple.cybooks.model.DataBase;
-import com.exemple.cybooks.manager.LibraryManager;
-
+package com.example.cybooks.gui;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import com.example.cybooks.exception.BookNotFoundException;
+import com.example.cybooks.exception.EmailAlreadyExistsException;
+import com.example.cybooks.exception.InvalidEmailFormatException;
+import com.example.cybooks.exception.NoCopyAvailableException;
+import com.example.cybooks.exception.UserHasLoansException;
+import com.example.cybooks.exception.UserNotFoundException;
+import com.example.cybooks.manager.LibraryManager;
+import com.example.cybooks.model.DataBase;
+import com.example.cybooks.model.User;
+
 import java.time.LocalDate;
 
 /**

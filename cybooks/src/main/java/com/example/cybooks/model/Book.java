@@ -1,4 +1,4 @@
-package com.exemple.cybooks.model;
+package com.example.cybooks.model;
 
 /**
  * Represents the book that has been lend to the user.

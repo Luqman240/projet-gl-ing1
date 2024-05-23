@@ -1,7 +1,5 @@
-package com.exemple.cybooks.api;
-import  com.exemple.cybooks.model.BookApi;
-
-import static com.exemple.cybooks.utils.Config.API_BASE_URL;
+package com.example.cybooks.api;
+import static com.example.cybooks.utils.Config.API_BASE_URL;
 
 import java.net.*;
 import java.net.http.HttpClient;
@@ -9,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import com.example.cybooks.model.BookApi;
 
 /**
  * A class responsible for connecting to an external API to search for books.
