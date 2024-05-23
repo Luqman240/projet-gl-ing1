@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import com.exemple.cybooks.model.User;
 
 public class LibraryApp extends Application {
     private LibraryManager libraryManager;
@@ -70,15 +71,15 @@ public class LibraryApp extends Application {
         Button btnUpdateUser = new Button("Update User");
         Button btnDeleteUser = new Button("Delete User");
         Button btnSearchUser = new Button("Search User");
-        //Button btnPrintUserProfile = new Button("Print User Profile");
+        Button btnPrintUserProfile = new Button("Print User Profile");
 
         btnAddUser.setOnAction(e -> showAddUserDialog());
         btnUpdateUser.setOnAction(e -> showUpdateUserDialog());
         btnDeleteUser.setOnAction(e -> showDeleteUserDialog());
         btnSearchUser.setOnAction(e -> showSearchUserDialog());
-        //btnPrintUserProfile.setOnAction(e -> showPrintUserProfileDialog());
+        btnPrintUserProfile.setOnAction(e -> showPrintUserProfileDialog());
 
-        centerBox.getChildren().addAll(btnAddUser, btnUpdateUser, btnDeleteUser);
+        centerBox.getChildren().addAll(btnAddUser, btnUpdateUser, btnDeleteUser, btnSearchUser, btnPrintUserProfile);
     }
 
     private void showAddUserDialog() {
@@ -178,86 +179,283 @@ public class LibraryApp extends Application {
     }
 
     private void showSearchUserDialog(){
-
-        Button btnById = new Button("By ID");
-        //Button btnByEmail = new Button("By Email");
+        centerBox.getChildren().clear();
+        Button btnById = new Button("By UserID");
+        Button btnByEmail = new Button("By Email");
 
         btnById.setOnAction(e -> showByIdDialog());
-        //btnByEmail.setOnAction(e -> showByEmailDialog());
+        btnByEmail.setOnAction(e -> showByEmailDialog());
+        centerBox.getChildren().addAll(btnById,btnByEmail);
     }
 
     private void showByIdDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("By User ID");
-
+    
         TextField IdField = new TextField();
         IdField.setPromptText("ID");
-    }
-
-    private void showBookOperations() {
-        centerBox.getChildren().clear();
-
-        Button btnAddBook = new Button("Add Book");
-        Button btnLoanBook = new Button("Loan Book");
-        Button btnReturnBook = new Button("Return Book");
-
-        btnAddBook.setOnAction(e -> showAddBookDialog());
-        btnLoanBook.setOnAction(e -> showLoanBookDialog());
-        btnReturnBook.setOnAction(e -> showReturnBookDialog());
-
-        centerBox.getChildren().addAll(btnAddBook, btnLoanBook, btnReturnBook);
-    }
-
-    private void showAddBookDialog() {
-        Stage dialog = new Stage();
-        dialog.setTitle("Add Book");
-
-        TextField isbnField = new TextField();
-        isbnField.setPromptText("ISBN");
-        TextField copiesField = new TextField();
-        copiesField.setPromptText("Copies Available");
         Button submitButton = new Button("Submit");
-
+    
         submitButton.setOnAction(e -> {
-            String isbn = isbnField.getText();
-            int copies = Integer.parseInt(copiesField.getText());
-
-            libraryManager.addBook(isbn, copies);
-            showAlert("Success", "Book added successfully!");
-            dialog.close();
+            User user = null;
+            try{
+                int userId = Integer.parseInt(IdField.getText());
+                user = libraryManager.searchUser(userId);
+            }
+            catch (Exception ex){
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (user != null) {
+                TextArea loansTextArea = new TextArea(user.toString());
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View User");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
         });
-
-        VBox dialogVBox = new VBox(10, isbnField, copiesField, submitButton);
+    
+        VBox dialogVBox = new VBox(10, IdField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
         dialog.setScene(dialogScene);
         dialog.show();
     }
 
-    private void showLoanBookDialog() {
+    private void showByEmailDialog(){
         Stage dialog = new Stage();
-        dialog.setTitle("Loan Book");
-
-        TextField userIdField = new TextField();
-        userIdField.setPromptText("User ID");
-        TextField isbnField = new TextField();
-        isbnField.setPromptText("ISBN");
+        dialog.setTitle("By Email");
+    
+        TextField EmailField = new TextField();
+        EmailField.setPromptText("Email");
         Button submitButton = new Button("Submit");
-
+    
         submitButton.setOnAction(e -> {
-            int userId = Integer.parseInt(userIdField.getText());
-            String isbn = isbnField.getText();
-
-            try {
-                libraryManager.loanBook(userId, isbn);
-                showAlert("Success", "Book loaned successfully!");
-                dialog.close();
-            } catch (Exception ex) {
+            User user = null;
+            try{
+                String userEmail = EmailField.getText();
+                user = libraryManager.searchUser(userEmail);
+            }
+            catch (Exception ex){
                 showAlert("Error", ex.getMessage());
             }
+    
+            if (user != null) {
+                TextArea loansTextArea = new TextArea(user.toString());
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View User");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
         });
+    
+        VBox dialogVBox = new VBox(10, EmailField, submitButton);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
 
-        VBox dialogVBox = new VBox(10, userIdField, isbnField, submitButton);
+    private void showPrintUserProfileDialog(){
+        Stage dialog = new Stage();
+        dialog.setTitle("Print User Profile");
+    
+        TextField IdField = new TextField();
+        IdField.setPromptText("ID");
+        Button submitButton = new Button("Submit");
+    
+        submitButton.setOnAction(e -> {
+            User user = null;
+            String userLoans = null;
+            try{
+                int userId = Integer.parseInt(IdField.getText());
+                user = libraryManager.searchUser(userId);
+                userLoans = libraryManager.getUserLoans(userId);
+            }
+            catch (Exception ex){
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (user != null && userLoans != null) {
+                TextArea loansTextArea = new TextArea(user.toString() + "\nLoans:\n" + userLoans);
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View User");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
+        });
+    
+        VBox dialogVBox = new VBox(10, IdField, submitButton);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void showBookOperations() {
+        centerBox.getChildren().clear();
+
+        Button btnSearchBook = new Button("Search Book");
+        Button btnReturnBook = new Button("Return Book");
+        Button btnPrintLoanBook = new Button("Print Loan Book");
+        
+        btnSearchBook.setOnAction(e -> showSearchBookDialog());
+        btnReturnBook.setOnAction(e -> showReturnBookDialog());
+        btnPrintLoanBook.setOnAction(e -> showPrintLoanBookDialog());
+
+        centerBox.getChildren().addAll(btnSearchBook, btnReturnBook,btnPrintLoanBook);
+    }
+
+    private void showSearchBookDialog() {
+        centerBox.getChildren().clear();
+        Button btnByISBN = new Button("By ISBN");
+        Button btnByTitle = new Button("By Title");
+        Button btnByAuthor = new Button("By Author");
+
+        btnByISBN.setOnAction(e -> showByISBNDialog());
+        btnByTitle.setOnAction(e -> showByTitleDialog());
+        btnByAuthor.setOnAction(e -> showByAuthorDialog());
+        centerBox.getChildren().addAll(btnByISBN, btnByTitle, btnByAuthor);
+    }
+
+    private void showByISBNDialog(){
+        Stage dialog = new Stage();
+        dialog.setTitle("By ISBN");
+    
+        TextField ISBNField = new TextField();
+        ISBNField.setPromptText("ISBN");
+        Button submitButton = new Button("Submit");
+    
+        submitButton.setOnAction(e -> {
+            String book = null;
+            try{
+                String isbn = ISBNField.getText();
+                book = libraryManager.searchBook(isbn, "isbn");
+            }
+            catch (Exception ex){
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (book != null) {
+                TextArea loansTextArea = new TextArea(book);
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View Book");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
+        });
+    
+        VBox dialogVBox = new VBox(10, ISBNField, submitButton);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void showByTitleDialog(){
+        Stage dialog = new Stage();
+        dialog.setTitle("By Title");
+    
+        TextField TitleField = new TextField();
+        TitleField.setPromptText("Title");
+        Button submitButton = new Button("Submit");
+    
+        submitButton.setOnAction(e -> {
+            String book = null;
+            try{
+                String title = TitleField.getText();
+                book = libraryManager.searchBook(title, "title");
+            }
+            catch (Exception ex){
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (book != null) {
+                TextArea loansTextArea = new TextArea(book);
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View Book");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
+        });
+    
+        VBox dialogVBox = new VBox(10, TitleField, submitButton);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void showByAuthorDialog(){
+        Stage dialog = new Stage();
+        dialog.setTitle("By Author");
+    
+        TextField AuthorField = new TextField();
+        AuthorField.setPromptText("Author");
+        Button submitButton = new Button("Submit");
+    
+        submitButton.setOnAction(e -> {
+            String book = null;
+            try{
+                String author = AuthorField.getText();
+                book = libraryManager.searchBook(author, "author");
+            }
+            catch (Exception ex){
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (book != null) {
+                TextArea loansTextArea = new TextArea(book);
+                loansTextArea.setEditable(false);
+                loansTextArea.setWrapText(true);
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View Book");
+    
+                VBox dialogVBox = new VBox(10, loansTextArea);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
+        });
+    
+        VBox dialogVBox = new VBox(10, AuthorField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
         dialog.setScene(dialogScene);
@@ -294,20 +492,67 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    private void showPrintLoanBookDialog() {
+        String books = libraryManager.viewLoans(true,false); // Modifier les paramètres selon vos besoins
+        TextArea booksTextArea = new TextArea(books);
+        booksTextArea.setEditable(false);
+        booksTextArea.setWrapText(true);
+
+        Stage dialog = new Stage();
+        dialog.setTitle("View Books");
+
+        VBox dialogVBox = new VBox(10, booksTextArea);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 600, 400);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
     private void showLoanOperations() {
         centerBox.getChildren().clear();
 
+        Button btnLoanBook = new Button("Loan Book");
         Button btnPrintLoan = new Button("Print all Loan");
         Button btnReturnLoan = new Button("PrintOverdue Loan");
         Button btnRenewLoan = new Button("printMostLoanedBooksLast30d");
 
+        btnLoanBook.setOnAction(e -> showLoanBookDialog());
         btnPrintLoan.setOnAction(e -> showPrintLoanDialog());
         btnReturnLoan.setOnAction(e -> showReturnLoanDialog());
         btnRenewLoan.setOnAction(e -> showRenewLoanDialog());
 
-        centerBox.getChildren().addAll(btnPrintLoan, btnReturnLoan, btnRenewLoan);
+        centerBox.getChildren().addAll(btnLoanBook,btnPrintLoan, btnReturnLoan, btnRenewLoan);
     }
 
+    private void showLoanBookDialog() {
+            Stage dialog = new Stage();
+            dialog.setTitle("Loan Book");
+
+            TextField userIdField = new TextField();
+            userIdField.setPromptText("User ID");
+            TextField isbnField = new TextField();
+            isbnField.setPromptText("ISBN");
+            Button submitButton = new Button("Submit");
+
+            submitButton.setOnAction(e -> {
+                int userId = Integer.parseInt(userIdField.getText());
+                String isbn = isbnField.getText();
+
+                try {
+                    libraryManager.loanBook(userId, isbn);
+                    showAlert("Success", "Book loaned successfully!");
+                    dialog.close();
+                } catch (Exception ex) {
+                    showAlert("Error", ex.getMessage());
+                }
+            });
+
+            VBox dialogVBox = new VBox(10, userIdField, isbnField, submitButton);
+            dialogVBox.setAlignment(Pos.CENTER);
+            Scene dialogScene = new Scene(dialogVBox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+        
     private void showPrintLoanDialog() {
         String loans = libraryManager.viewLoans(false, false); // Modifier les paramètres selon vos besoins
         TextArea loansTextArea = new TextArea(loans);

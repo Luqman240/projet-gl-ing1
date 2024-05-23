@@ -47,40 +47,40 @@ public class LibraryManageCLI {
 
             switch (choice) {
                 case 1:
-                    registerUser(scanner);
+                    registerUser(scanner); //
                     break;
                 case 2:
-                    updateUser(scanner);
+                    updateUser(scanner);//
                     break;
                 case 3:
-                    deleteUser(scanner);
+                    deleteUser(scanner);//
                     break;
                 case 4:
-                    loanBook(scanner);
+                    loanBook(scanner); //
                     break;
                 case 5:
-                    returnBook(scanner);
+                    returnBook(scanner);//
                     break;
                 case 6:
-                    searchUser(scanner);
+                    searchUser(scanner);//
                     break;
                 case 7:
-                    searchBook(scanner);
+                    searchBook(scanner);//
                     break;
                 case 8:
-                    printAllLoans();
+                    printAllLoans(); //
                     break;
                 case 9:
-                    printOverdueLoans(scanner);
+                    printOverdueLoans(scanner);//
                     break;
                 case 10:
-                    printUserProfile(scanner);
+                    printUserProfile(scanner);//
                     break;
                 case 11:
                     printAllBookLoaned();
                     break;
                 case 12:
-                    printMostLoanedBooksLast30d();
+                    printMostLoanedBooksLast30d(); //
                     break;
                 case 13:
                     exit = true;
