@@ -1,10 +1,16 @@
 package com.example.cybooks.gui;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.example.cybooks.manager.LibraryManager;
 import com.example.cybooks.model.DataBase;
 import com.example.cybooks.model.User;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,23 +30,28 @@ public class LibraryApp extends Application {
     @Override
     public void start(@SuppressWarnings("exports") Stage primaryStage) {
         // Initialize the LibraryManager with your database connection
-        DataBase db = new DataBase(); // Assurez-vous de créer et de configurer votre base de données
+        DataBase db = new DataBase(); 
         libraryManager = new LibraryManager(db);
         db.startServer();
-
+       
         primaryStage.setTitle("Library Management System");
 
         // Create main buttons
         Button btnUsers = new Button("Users");
+        btnUsers.getStyleClass().add("button-users");
         Button btnBooks = new Button("Books");
+        btnBooks.getStyleClass().add("button-books");
         Button btnLoans = new Button("Loans");
+        btnLoans.getStyleClass().add("button-loans");
 
         // HBox to hold main buttons
         HBox mainButtonsBox = new HBox(10, btnUsers, btnBooks, btnLoans);
         mainButtonsBox.setAlignment(Pos.CENTER);
+        mainButtonsBox.getStyleClass().add("menu-bar");
 
         // Footer label
-        Label footerLabel = new Label("LibraryApp © 2024");
+        Label footerLabel = new Label("CY-BOOKS © 2024");
+        footerLabel.getStyleClass().add("footer");
 
         // VBox to hold footer
         VBox footerBox = new VBox(footerLabel);
@@ -61,7 +72,13 @@ public class LibraryApp extends Application {
         btnBooks.setOnAction(e -> showBookOperations());
         btnLoans.setOnAction(e -> showLoanOperations());
 
-        primaryStage.setScene(new Scene(root, 400, 400));
+        // Create the scene and stylize it
+        Scene scene = new Scene(root, 800, 600);
+        String css = this.getClass().getResource("css/styles.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
+        
+
         primaryStage.show();
     }
 
@@ -89,10 +106,13 @@ public class LibraryApp extends Application {
 
         TextField nameField = new TextField();
         nameField.setPromptText("Name");
+        nameField.getStyleClass().add("dialog-textfield");
         TextField emailField = new TextField();
         emailField.setPromptText("Email");
+        emailField.getStyleClass().add("dialog-textfield");
         TextField addressField = new TextField();
         addressField.setPromptText("Address");
+        addressField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
 
         submitButton.setOnAction(e -> {
@@ -112,6 +132,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, nameField, emailField, addressField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -122,12 +144,16 @@ public class LibraryApp extends Application {
 
         TextField idField = new TextField();
         idField.setPromptText("User ID");
+        idField.getStyleClass().add("dialog-textfield");
         TextField nameField = new TextField();
         nameField.setPromptText("New Name");
+        nameField.getStyleClass().add("dialog-textfield");
         TextField emailField = new TextField();
         emailField.setPromptText("New Email");
+        emailField.getStyleClass().add("dialog-textfield");
         TextField addressField = new TextField();
         addressField.setPromptText("New Address");
+        addressField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
 
         submitButton.setOnAction(e -> {
@@ -148,6 +174,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, idField, nameField, emailField, addressField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 250);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -158,6 +186,7 @@ public class LibraryApp extends Application {
 
         TextField idField = new TextField();
         idField.setPromptText("User ID");
+        idField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
 
         submitButton.setOnAction(e -> {
@@ -175,6 +204,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, idField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 150);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -195,6 +226,7 @@ public class LibraryApp extends Application {
     
         TextField IdField = new TextField();
         IdField.setPromptText("ID");
+        IdField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
     
         submitButton.setOnAction(e -> {
@@ -218,6 +250,8 @@ public class LibraryApp extends Application {
                 VBox dialogVBox = new VBox(10, loansTextArea);
                 dialogVBox.setAlignment(Pos.CENTER);
                 Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
@@ -226,6 +260,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, IdField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -236,6 +272,7 @@ public class LibraryApp extends Application {
     
         TextField EmailField = new TextField();
         EmailField.setPromptText("Email");
+        EmailField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
     
         submitButton.setOnAction(e -> {
@@ -259,6 +296,8 @@ public class LibraryApp extends Application {
                 VBox dialogVBox = new VBox(10, loansTextArea);
                 dialogVBox.setAlignment(Pos.CENTER);
                 Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
@@ -267,6 +306,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, EmailField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -277,6 +318,7 @@ public class LibraryApp extends Application {
     
         TextField IdField = new TextField();
         IdField.setPromptText("ID");
+        IdField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
     
         submitButton.setOnAction(e -> {
@@ -302,6 +344,8 @@ public class LibraryApp extends Application {
                 VBox dialogVBox = new VBox(10, loansTextArea);
                 dialogVBox.setAlignment(Pos.CENTER);
                 Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
@@ -310,6 +354,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, IdField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -340,35 +386,51 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnByISBN, btnByTitle, btnByAuthor);
     }
 
-    private void showByISBNDialog(){
+    private void showByISBNDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("By ISBN");
     
         TextField ISBNField = new TextField();
         ISBNField.setPromptText("ISBN");
+        ISBNField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
     
         submitButton.setOnAction(e -> {
-            String book = null;
-            try{
+            String books = null;
+            try {
                 String isbn = ISBNField.getText();
-                book = libraryManager.searchBook(isbn, "isbn");
-            }
-            catch (Exception ex){
+                books = libraryManager.searchBook(isbn, "isbn");
+            } catch (Exception ex) {
                 showAlert("Error", ex.getMessage());
             }
     
-            if (book != null) {
-                TextArea loansTextArea = new TextArea(book);
-                loansTextArea.setEditable(false);
-                loansTextArea.setWrapText(true);
+            if (books != null) {
+                List<String> bookList = new ArrayList<>(Arrays.asList(books.split("(?=Title)"))); // split before each "Title"
+                
+                if (bookList.get(0).isEmpty()) { // if the first element is empty
+                    bookList.remove(0); // remove it
+                }
+    
+                Pagination pagination = new Pagination((int) Math.ceil((double) bookList.size() / 4), 0); 
+                pagination.getStyleClass().add("dialog-pagination");
+                pagination.setPageFactory((pageIndex) -> {
+                    int fromIndex = pageIndex * 4; 
+                    int toIndex = Math.min(fromIndex + 4, bookList.size()); 
+    
+                    ListView<String> listView = new ListView<>();
+                    listView.getStyleClass().add("dialog-listview");
+                    listView.setItems(FXCollections.observableArrayList(bookList.subList(fromIndex, toIndex)));
+                    return new BorderPane(listView);
+                });
     
                 Stage dialog2 = new Stage();
                 dialog2.setTitle("View Book");
     
-                VBox dialogVBox = new VBox(10, loansTextArea);
+                VBox dialogVBox = new VBox(10, pagination);
                 dialogVBox.setAlignment(Pos.CENTER);
-                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                Scene dialogScene = new Scene(dialogVBox, 620, 400); 
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
@@ -377,6 +439,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, ISBNField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -384,73 +448,108 @@ public class LibraryApp extends Application {
     private void showByTitleDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("By Title");
-    
-        TextField TitleField = new TextField();
-        TitleField.setPromptText("Title");
+
+        TextField titleField = new TextField();
+        titleField.setPromptText("Title");
+        titleField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
-    
+
         submitButton.setOnAction(e -> {
-            String book = null;
+            String books = null;
             try{
-                String title = TitleField.getText();
-                book = libraryManager.searchBook(title, "title");
+                String title = titleField.getText();
+                books = libraryManager.searchBook(title, "title");
             }
             catch (Exception ex){
                 showAlert("Error", ex.getMessage());
             }
-    
-            if (book != null) {
-                TextArea loansTextArea = new TextArea(book);
-                loansTextArea.setEditable(false);
-                loansTextArea.setWrapText(true);
-    
+
+            if (books != null) {
+                List<String> bookList = new ArrayList<>(Arrays.asList(books.split("(?=Title)"))); // split before each "Title"
+                
+                if (bookList.get(0).isEmpty()) { // if the first element is empty
+                    bookList.remove(0); // remove it
+                }
+
+                Pagination pagination = new Pagination((int) Math.ceil((double) bookList.size() / 4), 0);
+                pagination.getStyleClass().add("dialog-pagination");
+                pagination.setPageFactory((pageIndex) -> {
+                    int fromIndex = pageIndex * 4;
+                    int toIndex = Math.min(fromIndex + 4, bookList.size());
+
+                    ListView<String> listView = new ListView<>();
+                    listView.getStyleClass().add("dialog-listview");
+                    listView.setItems(FXCollections.observableArrayList(bookList.subList(fromIndex, toIndex)));
+                    return new BorderPane(listView);
+                });
+
                 Stage dialog2 = new Stage();
                 dialog2.setTitle("View Book");
-    
-                VBox dialogVBox = new VBox(10, loansTextArea);
+
+                VBox dialogVBox = new VBox(10, pagination);
                 dialogVBox.setAlignment(Pos.CENTER);
-                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                Scene dialogScene = new Scene(dialogVBox, 800, 425);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
         });
-    
-        VBox dialogVBox = new VBox(10, TitleField, submitButton);
+
+        VBox dialogVBox = new VBox(10, titleField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
 
-    private void showByAuthorDialog(){
+    private void showByAuthorDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("By Author");
     
         TextField AuthorField = new TextField();
         AuthorField.setPromptText("Author");
+        AuthorField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
     
         submitButton.setOnAction(e -> {
-            String book = null;
-            try{
+            String books = null;
+            try {
                 String author = AuthorField.getText();
-                book = libraryManager.searchBook(author, "author");
-            }
-            catch (Exception ex){
+                books = libraryManager.searchBook(author, "author");
+            } catch (Exception ex) {
                 showAlert("Error", ex.getMessage());
             }
     
-            if (book != null) {
-                TextArea loansTextArea = new TextArea(book);
-                loansTextArea.setEditable(false);
-                loansTextArea.setWrapText(true);
+            if (books != null) {
+                List<String> bookList = new ArrayList<>(Arrays.asList(books.split("(?=Title)"))); // split before each "Title"
+                
+                if (bookList.get(0).isEmpty()) { // if the first element is empty
+                    bookList.remove(0); // remove it
+                }
+    
+                Pagination pagination = new Pagination((int) Math.ceil((double) bookList.size() / 4), 0); 
+                pagination.getStyleClass().add("dialog-pagination");
+                pagination.setPageFactory((pageIndex) -> {
+                    int fromIndex = pageIndex * 4; 
+                    int toIndex = Math.min(fromIndex + 4, bookList.size()); 
+    
+                    ListView<String> listView = new ListView<>();
+                    listView.getStyleClass().add("dialog-listview");
+                    listView.setItems(FXCollections.observableArrayList(bookList.subList(fromIndex, toIndex)));
+                    return new BorderPane(listView);
+                });
     
                 Stage dialog2 = new Stage();
                 dialog2.setTitle("View Book");
     
-                VBox dialogVBox = new VBox(10, loansTextArea);
+                VBox dialogVBox = new VBox(10, pagination);
                 dialogVBox.setAlignment(Pos.CENTER);
-                Scene dialogScene = new Scene(dialogVBox, 600, 400);
+                Scene dialogScene = new Scene(dialogVBox, 800, 425);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
                 dialog2.setScene(dialogScene);
                 dialog2.show();
             }
@@ -459,6 +558,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, AuthorField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -469,8 +570,10 @@ public class LibraryApp extends Application {
 
         TextField userIdField = new TextField();
         userIdField.setPromptText("User ID");
+        userIdField.getStyleClass().add("dialog-textfield");
         TextField isbnField = new TextField();
         isbnField.setPromptText("ISBN");
+        isbnField.getStyleClass().add("dialog-textfield");
         Button submitButton = new Button("Submit");
 
         submitButton.setOnAction(e -> {
@@ -489,6 +592,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, userIdField, isbnField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -505,6 +610,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, booksTextArea);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 600, 400);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -530,8 +637,10 @@ public class LibraryApp extends Application {
 
             TextField userIdField = new TextField();
             userIdField.setPromptText("User ID");
+            userIdField.getStyleClass().add("dialog-textfield");
             TextField isbnField = new TextField();
             isbnField.setPromptText("ISBN");
+            isbnField.getStyleClass().add("dialog-textfield");
             Button submitButton = new Button("Submit");
 
             submitButton.setOnAction(e -> {
@@ -550,6 +659,8 @@ public class LibraryApp extends Application {
             VBox dialogVBox = new VBox(10, userIdField, isbnField, submitButton);
             dialogVBox.setAlignment(Pos.CENTER);
             Scene dialogScene = new Scene(dialogVBox, 300, 200);
+            URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+            dialogScene.getStylesheets().add(url.toExternalForm());
             dialog.setScene(dialogScene);
             dialog.show();
         }
@@ -566,6 +677,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, loansTextArea);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 600, 400);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -582,6 +695,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, loansTextAreaa);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 600, 400);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -598,6 +713,8 @@ public class LibraryApp extends Application {
         VBox dialogVBox = new VBox(10, loansTextAreaa);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 600, 400);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
     }
