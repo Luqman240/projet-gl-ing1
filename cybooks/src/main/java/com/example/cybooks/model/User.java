@@ -157,11 +157,11 @@ public class User {
      */
     @Override
     public String toString() {
-        return "User{" +
+        return "User:\n" +
                 "userID=" + userID +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+                ", address='" + address + '\''
+                ;
     }
 }
