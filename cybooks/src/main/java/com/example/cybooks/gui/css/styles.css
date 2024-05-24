@@ -1,0 +1,125 @@
+/* General style */
+.root {
+    -fx-font-family: "Arial";
+    font-family: Arial;
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ff7f50, #1e90ff);
+    background-color: linear-gradient(from 0% 0% to 100% 100%, #ff7f50, #1e90ff);
+}
+
+/* Book titles */
+.title {
+    -fx-font-size: 18px;
+    font-size: 18px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* Book authors */
+.author {
+    -fx-font-size: 16px;
+    font-size: 16px;
+    -fx-text-fill: #666;
+}
+
+/* Book descriptions */
+.description {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-text-fill: #999;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: transparent;
+    background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 10px 24px;
+    padding: 10px 24px;
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-border-radius: 4px;
+    border-radius: 4px;
+}
+.button-users{
+    -fx-font-weight: bold;
+    font-weight: bold;
+}
+.button-books{
+    -fx-font-weight: bold;
+    font-weight: bold;
+}
+.button-loans{
+    -fx-font-weight: bold;
+    font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+    -fx-padding: 10px 70px;
+    padding: 10px 70px;
+}
+.menu-bar {
+    -fx-background-color: transparent;
+    background-color: transparent;
+    -fx-padding: 10;
+    padding: 10px;
+}
+
+.menu-bar .button {
+    -fx-background-color: transparent;
+    background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-padding: 5 10;
+    padding: 5px 10px;
+}
+
+.menu-bar .button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+/* Style for the footer */
+.footer {
+    -fx-text-fill: white;          /* Initial text color of the footer */
+    -fx-padding: 10px;             /* Internal spacing */
+    padding: 10px;             /* Internal spacing */
+}
+
+/* General style for dialog windows */
+.dialog-root {
+    -fx-font-family: "Arial";
+    font-family: "Arial";
+    -fx-background-color: #f8f8f8;
+    background-color: #f8f8f8;
+}
+
+/* Text area of the dialog window */
+.dialog-textfield {
+    -fx-font-size: 14px;
+    font-size: 14px;
+    -fx-padding: 10px;
+    padding: 10px;
+}
+
+/* Pagination of the dialog window */
+.dialog-pagination {
+    -fx-border-color: #1e90ff;
+    border-color: #1e90ff;
+    -fx-border-width: 2px;
+    border-width: 2px;
+}
+
+/* ListView of the dialog window */
+.dialog-listview {
+    -fx-background-color: #f8f8f8;
+    background-color: #f8f8f8;
+    -fx-border-color: #1e90ff;
+    border-color: #1e90ff;
+    -fx-border-width: 2px;
+    border-width: 2px;
+}

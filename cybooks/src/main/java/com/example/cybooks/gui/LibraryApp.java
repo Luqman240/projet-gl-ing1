@@ -19,14 +19,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+* The main class for the Library Management System application.
+* This class is responsible for initializing the application and setting up the user interface.
+*/
 public class LibraryApp extends Application {
     private LibraryManager libraryManager;
     private VBox centerBox;
 
+    /**
+    * The main method that launches the application.
+    * @param args command line arguments
+    */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+    * The start method is called after the init method has returned, and after the system is ready for the application to begin running.
+    * @param primaryStage the primary stage for this application, onto which the application scene can be set.
+    */
     @Override
     public void start(@SuppressWarnings("exports") Stage primaryStage) {
         // Initialize the LibraryManager with your database connection
@@ -82,6 +94,9 @@ public class LibraryApp extends Application {
         primaryStage.show();
     }
 
+    /**
+    * This method is used to display the user operations.
+    */
     private void showUserOperations() {
         centerBox.getChildren().clear();
 
@@ -100,6 +115,9 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnAddUser, btnUpdateUser, btnDeleteUser, btnSearchUser, btnPrintUserProfile);
     }
 
+    /**
+    * This method is used to display the Add User dialog.
+    */
     private void showAddUserDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("Add User");
@@ -138,6 +156,9 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display the Update User dialog.
+    */
     private void showUpdateUserDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("Update User");
@@ -180,6 +201,9 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display the Delete User dialog.
+    */
     private void showDeleteUserDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("Delete User");
@@ -210,6 +234,9 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display the Search User dialog.
+    */
     private void showSearchUserDialog(){
         centerBox.getChildren().clear();
         Button btnById = new Button("By UserID");
@@ -220,6 +247,9 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnById,btnByEmail);
     }
 
+    /**
+    * This method is used to display the Search by ID dialog.
+    */
     private void showByIdDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("By User ID");
@@ -266,6 +296,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display a dialog box that allows the user to search for a user by email.
+    * If a user is found, a new dialog box is displayed showing the user's details.
+    */
     private void showByEmailDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("By Email");
@@ -312,6 +346,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display a dialog box that allows the user to search for a user by ID.
+    * If a user is found, a new dialog box is displayed showing the user's details and their loans.
+    */
     private void showPrintUserProfileDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("Print User Profile");
@@ -360,6 +398,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to display three buttons for different book operations: "Search Book", "Return Book", and "Print Loan Book".
+    * Each button has an event handler that calls a different method when clicked.
+    */
     private void showBookOperations() {
         centerBox.getChildren().clear();
 
@@ -374,6 +416,10 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnSearchBook, btnReturnBook,btnPrintLoanBook);
     }
 
+    /**
+    * This method is used to display three buttons for different search methods: "By ISBN", "By Title", and "By Author".
+    * Each button has an event handler that calls a different method when clicked.
+    */
     private void showSearchBookDialog() {
         centerBox.getChildren().clear();
         Button btnByISBN = new Button("By ISBN");
@@ -386,6 +432,10 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnByISBN, btnByTitle, btnByAuthor);
     }
 
+    /**
+    * This method is used to display a dialog box that allows the user to search for a book by ISBN.
+    * If a book is found, a new dialog box is displayed showing the book's details.
+    */
     private void showByISBNDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("By ISBN");
@@ -445,6 +495,13 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog for searching books by title.
+    * It creates a new dialog window with a TextField for the title and a submit button.
+    * When the submit button is clicked, it searches for books with the given title.
+    * If books are found, it shows another dialog with a list of books.
+    * If an error occurs during the search, it shows an alert with the error message.
+    */
     private void showByTitleDialog(){
         Stage dialog = new Stage();
         dialog.setTitle("By Title");
@@ -505,6 +562,13 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog for searching books by title.
+    * It creates a new dialog window with a TextField for the title and a submit button.
+    * When the submit button is clicked, it searches for books with the given title.
+    * If books are found, it shows another dialog with a list of books.
+    * If an error occurs during the search, it shows an alert with the error message.
+    */
     private void showByAuthorDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("By Author");
@@ -564,6 +628,13 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog for returning a book.
+    * It creates a new dialog window with TextFields for the user ID and ISBN of the book, and a submit button.
+    * When the submit button is clicked, it attempts to return the book.
+    * If the book is returned successfully, it shows an alert with a success message.
+    * If an error occurs during the return, it shows an alert with the error message.
+    */
     private void showReturnBookDialog() {
         Stage dialog = new Stage();
         dialog.setTitle("Return Book");
@@ -598,6 +669,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog with a list of all loaned books.
+    * It retrieves the list of loaned books and shows it in a TextArea in the dialog.
+    */
     private void showPrintLoanBookDialog() {
         String books = libraryManager.viewLoans(true,false); // Modifier les paramètres selon vos besoins
         TextArea booksTextArea = new TextArea(books);
@@ -631,6 +706,13 @@ public class LibraryApp extends Application {
         centerBox.getChildren().addAll(btnLoanBook,btnPrintLoan, btnReturnLoan, btnRenewLoan);
     }
 
+    /**
+    * This method is used to show a dialog for loaning a book.
+    * It creates a new dialog window with TextFields for the user ID and ISBN of the book, and a submit button.
+    * When the submit button is clicked, it attempts to loan the book.
+    * If the book is loaned successfully, it shows an alert with a success message.
+    * If an error occurs during the loan, it shows an alert with the error message.
+    */
     private void showLoanBookDialog() {
             Stage dialog = new Stage();
             dialog.setTitle("Loan Book");
@@ -663,8 +745,12 @@ public class LibraryApp extends Application {
             dialogScene.getStylesheets().add(url.toExternalForm());
             dialog.setScene(dialogScene);
             dialog.show();
-        }
-        
+    }
+    
+    /**
+    * This method is used to show a dialog with a list of all loans.
+    * It retrieves the list of loans and shows it in a TextArea in the dialog.
+    */
     private void showPrintLoanDialog() {
         String loans = libraryManager.viewLoans(false, false); // Modifier les paramètres selon vos besoins
         TextArea loansTextArea = new TextArea(loans);
@@ -683,6 +769,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog with a list of all overdue loans.
+    * It retrieves the list of overdue loans and shows it in a TextArea in the dialog.
+    */
     private void showReturnLoanDialog() {
         String loans = libraryManager.viewLoans(true, true); // Modifier les paramètres selon vos besoins
         TextArea loansTextAreaa = new TextArea(loans);
@@ -701,6 +791,10 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show a dialog with a list of the most loaned books in the last 30 days.
+    * It retrieves the list of the most loaned books in the last 30 days and shows it in a TextArea in the dialog.
+    */
     private void showRenewLoanDialog() {
         String loans = libraryManager.mostLoanedBooksLast30d(); // Modifier les paramètres selon vos besoins
         TextArea loansTextAreaa = new TextArea(loans);
@@ -719,6 +813,11 @@ public class LibraryApp extends Application {
         dialog.show();
     }
 
+    /**
+    * This method is used to show an alert with a given title and content.
+    * @param title the title of the alert
+    * @param content the content of the alert
+    */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
