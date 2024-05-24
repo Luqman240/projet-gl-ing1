@@ -247,4 +247,12 @@ public class BookApi {
         }
         return "Title: " + this.getTitle() + "\nAuthors: " + authors + "\nISBN: " + this.getIsbn() + "\nPublisher: " + this.getPublisher() + "\nDate: " + this.getDate();
     }
+
+    public String toString2() {
+        StringBuilder authors = new StringBuilder();
+        for (String author : this.getAuthors()) {
+            authors.append(author).append(";");
+        }
+        return "\n\nTitle: " + this.getTitle() + "\nAuthors: " + authors + "\nISBN: " + this.getIsbn() + "\nPublisher: " + this.getPublisher() + "\nDate: " + this.getDate();
+    }
 }

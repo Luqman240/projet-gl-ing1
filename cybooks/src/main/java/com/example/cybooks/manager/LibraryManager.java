@@ -583,6 +583,58 @@ public class LibraryManager {
     }
 
     /**
+     * Searches for a book based on a search term and a search type.
+     *
+     * @param searchTerm The term to search for. This could be the title, author, or ISBN of the book.
+     * @param searchType The type of search to perform. It can be "isbn", "title", or "author".
+     * @return A string representing the found books. Each book is separated by a newline.
+     * @throws BookNotFoundException If no book is found with the given search term.
+     * @throws IllegalArgumentException If an invalid search type is provided.
+     */
+    public String searchBook2(String searchTerm, String searchType) throws BookNotFoundException {
+        if (searchTerm.isEmpty()) {
+            throw new BookNotFoundException("Search term cannot be empty.");
+        }
+    
+        List<BookApi> books;
+        List<BookApi> books2;
+    
+        switch (searchType.toLowerCase()) {
+            case "isbn":
+                books = apiConnector.searchByISBN("bib",searchTerm);
+                books2 = apiConnector.searchByISBN("aut", searchTerm);
+                break;
+            case "title":
+                books = apiConnector.searchByTitle("bib",searchTerm);
+                books2 = apiConnector.searchByTitle("aut", searchTerm);
+                break;
+            case "author":
+                books = apiConnector.searchByAuthor("bib",searchTerm);
+                books2 = apiConnector.searchByAuthor("aut", searchTerm);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid search type: " + searchType);
+        }
+    
+        StringBuilder booksString = new StringBuilder();
+        if (!books.isEmpty()) {
+            List<BookApi> firstTwoBooks = books.stream().limit(50).collect(Collectors.toList());
+            for (BookApi book : firstTwoBooks) {
+                booksString.append(book.toString2());
+            }
+        } else if (!books2.isEmpty()) {
+            List<BookApi> bookApi2 = books2.stream().limit(50).collect(Collectors.toList());
+            for (BookApi book : bookApi2) {
+                booksString.append(book.toString2());
+            }
+        } else {
+            throw new BookNotFoundException("Book not found: " + searchTerm);
+        }
+    
+        return booksString.toString();
+    }
+
+    /**
      * Retrieves the most loaned books in the last 30 days from the database.
      *
      * @return A string containing information about the most loaned books.

@@ -339,7 +339,7 @@ public class LibraryManageCLI {
         String searchTerm = scanner.nextLine();
 
         try {
-            String result = libraryManager.searchBook(searchTerm, searchType);
+            String result = libraryManager.searchBook2(searchTerm, searchType);
             System.out.println(result);
         } catch (BookNotFoundException e) {
             System.out.println("Error: " + e.getMessage());
