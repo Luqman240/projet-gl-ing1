@@ -313,6 +313,7 @@ public class LibraryManageCLI {
         System.out.println("1. ISBN");
         System.out.println("2. Title");
         System.out.println("3. Author");
+        System.out.println("4. Date");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine();  // Consume the newline left by nextInt
@@ -330,6 +331,10 @@ public class LibraryManageCLI {
             case 3:
                 searchType = "author";
                 System.out.print("Enter Author: ");
+                break;
+            case 4:
+                searchType = "date";
+                System.out.print("Enter Date: ");
                 break;
             default:
                 System.out.println("Invalid choice.");

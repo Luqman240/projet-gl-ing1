@@ -560,6 +560,10 @@ public class LibraryManager {
                 books = apiConnector.searchByAuthor("bib",searchTerm);
                 books2 = apiConnector.searchByAuthor("aut", searchTerm);
                 break;
+            case "date":
+                books = apiConnector.searchByDate("bib",searchTerm);
+                books2 = apiConnector.searchByDate("aut", searchTerm);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid search type: " + searchType);
         }
@@ -611,6 +615,10 @@ public class LibraryManager {
             case "author":
                 books = apiConnector.searchByAuthor("bib",searchTerm);
                 books2 = apiConnector.searchByAuthor("aut", searchTerm);
+                break;
+            case "date":
+                books = apiConnector.searchByDate("bib",searchTerm);
+                books2 = apiConnector.searchByDate("aut", searchTerm);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid search type: " + searchType);

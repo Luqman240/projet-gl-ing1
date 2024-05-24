@@ -425,11 +425,13 @@ public class LibraryApp extends Application {
         Button btnByISBN = new Button("By ISBN");
         Button btnByTitle = new Button("By Title");
         Button btnByAuthor = new Button("By Author");
+        Button btnByDate = new Button("By Date");
 
         btnByISBN.setOnAction(e -> showByISBNDialog());
         btnByTitle.setOnAction(e -> showByTitleDialog());
         btnByAuthor.setOnAction(e -> showByAuthorDialog());
-        centerBox.getChildren().addAll(btnByISBN, btnByTitle, btnByAuthor);
+        btnByDate.setOnAction(e -> showByDateDialog());
+        centerBox.getChildren().addAll(btnByISBN, btnByTitle, btnByAuthor, btnByDate);
     }
 
     /**
@@ -620,6 +622,73 @@ public class LibraryApp extends Application {
         });
     
         VBox dialogVBox = new VBox(10, AuthorField, submitButton);
+        dialogVBox.setAlignment(Pos.CENTER);
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+        dialogScene.getStylesheets().add(url.toExternalForm());
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    /**
+    * This method is used to show a dialog for searching books by date.
+    * It creates a new dialog window with a TextField for the date and a submit button.
+    * When the submit button is clicked, it searches for books with the given date.
+    * If books are found, it shows another dialog with a list of books.
+    * The list of books is paginated, with 4 books per page.
+    * If an error occurs during the search, it shows an alert with the error message.
+    */
+    private void showByDateDialog() {
+        Stage dialog = new Stage();
+        dialog.setTitle("By Date");
+    
+        TextField DateField = new TextField();
+        DateField.setPromptText("Date");
+        DateField.getStyleClass().add("dialog-textfield");
+        Button submitButton = new Button("Submit");
+    
+        submitButton.setOnAction(e -> {
+            String books = null;
+            try {
+                String date = DateField.getText();
+                books = libraryManager.searchBook(date, "date");
+            } catch (Exception ex) {
+                showAlert("Error", ex.getMessage());
+            }
+    
+            if (books != null) {
+                List<String> bookList = new ArrayList<>(Arrays.asList(books.split("(?=Title)"))); // split before each "Title"
+                
+                if (bookList.get(0).isEmpty()) { // if the first element is empty
+                    bookList.remove(0); // remove it
+                }
+    
+                Pagination pagination = new Pagination((int) Math.ceil((double) bookList.size() / 4), 0); 
+                pagination.getStyleClass().add("dialog-pagination");
+                pagination.setPageFactory((pageIndex) -> {
+                    int fromIndex = pageIndex * 4; 
+                    int toIndex = Math.min(fromIndex + 4, bookList.size()); 
+    
+                    ListView<String> listView = new ListView<>();
+                    listView.getStyleClass().add("dialog-listview");
+                    listView.setItems(FXCollections.observableArrayList(bookList.subList(fromIndex, toIndex)));
+                    return new BorderPane(listView);
+                });
+    
+                Stage dialog2 = new Stage();
+                dialog2.setTitle("View Book");
+    
+                VBox dialogVBox = new VBox(10, pagination);
+                dialogVBox.setAlignment(Pos.CENTER);
+                Scene dialogScene = new Scene(dialogVBox, 800, 425);
+                URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
+                dialogScene.getStylesheets().add(url.toExternalForm());
+                dialog2.setScene(dialogScene);
+                dialog2.show();
+            }
+        });
+    
+        VBox dialogVBox = new VBox(10, DateField, submitButton);
         dialogVBox.setAlignment(Pos.CENTER);
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
         URL url = getClass().getResource("/com/example/cybooks/gui/css/styles.css");
