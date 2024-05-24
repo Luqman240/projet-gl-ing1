@@ -245,6 +245,6 @@ public class BookApi {
         for (String author : this.getAuthors()) {
             authors.append(author).append(";");
         }
-        return "Title: " + this.getTitle() + "\nAuthors: " + authors + "\nISBN: " + this.getIsbn() + "\nPublisher: " + this.getPublisher() + "\nDate: " + this.getDate();
+        return "\n\nTitle: " + this.getTitle() + "\nAuthors: " + authors + "\nISBN: " + this.getIsbn() + "\nPublisher: " + this.getPublisher() + "\nDate: " + this.getDate();
     }
 }

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.cybooks.api.ApiConnector;
 import com.example.cybooks.exception.BookNotFoundException;
@@ -564,10 +565,10 @@ public class LibraryManager {
         }
 
         if (!books.isEmpty()) {
-            BookApi bookApi = books.getFirst(); // assuming the first result is what we want
-            return bookApi.toString();
+            List<BookApi> firstTwoBooks = books.stream().limit(2).collect(Collectors.toList()); // assuming the first result is what we want
+            return firstTwoBooks.toString();
         }else if (!books2.isEmpty()) {
-            BookApi bookApi2 = books2.getFirst();
+            List<BookApi> bookApi2 = books2.stream().limit(2).collect(Collectors.toList());
             return bookApi2.toString();
         }
 

@@ -24,23 +24,28 @@ public class LibraryApp extends Application {
     @Override
     public void start(@SuppressWarnings("exports") Stage primaryStage) {
         // Initialize the LibraryManager with your database connection
-        DataBase db = new DataBase(); // Assurez-vous de créer et de configurer votre base de données
+        DataBase db = new DataBase(); 
         libraryManager = new LibraryManager(db);
         db.startServer();
-
+       
         primaryStage.setTitle("Library Management System");
 
         // Create main buttons
         Button btnUsers = new Button("Users");
+        btnUsers.getStyleClass().add("button-users");
         Button btnBooks = new Button("Books");
+        btnBooks.getStyleClass().add("button-books");
         Button btnLoans = new Button("Loans");
+        btnLoans.getStyleClass().add("button-loans");
 
         // HBox to hold main buttons
         HBox mainButtonsBox = new HBox(10, btnUsers, btnBooks, btnLoans);
         mainButtonsBox.setAlignment(Pos.CENTER);
+        mainButtonsBox.getStyleClass().add("menu-bar");
 
         // Footer label
-        Label footerLabel = new Label("LibraryApp © 2024");
+        Label footerLabel = new Label("CY-BOOKS © 2024");
+        footerLabel.getStyleClass().add("footer");
 
         // VBox to hold footer
         VBox footerBox = new VBox(footerLabel);
@@ -61,7 +66,13 @@ public class LibraryApp extends Application {
         btnBooks.setOnAction(e -> showBookOperations());
         btnLoans.setOnAction(e -> showLoanOperations());
 
-        primaryStage.setScene(new Scene(root, 400, 400));
+        // Create the scene and stylize it
+        Scene scene = new Scene(root, 800, 600);
+        String css = this.getClass().getResource("css/styles.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
+        
+
         primaryStage.show();
     }
 
