@@ -531,22 +531,22 @@ public class LibraryManager {
     }
 
     /**
-     * Searches for a book based on the given search term and type, either ISBN, title, or author.
+     * Searches for a book based on a search term and a search type.
      *
-     * @param searchTerm The term to search for (ISBN, title, or author).
-     * @param searchType The type of search to perform (ISBN, title, or author).
-     * @return A string representation of the found book.
-     * @throws BookNotFoundException If the book corresponding to the search term is not found.
+     * @param searchTerm The term to search for. This could be the title, author, or ISBN of the book.
+     * @param searchType The type of search to perform. It can be "isbn", "title", or "author".
+     * @return A string representing the found books. Each book is separated by a newline.
+     * @throws BookNotFoundException If no book is found with the given search term.
      * @throws IllegalArgumentException If an invalid search type is provided.
      */
     public String searchBook(String searchTerm, String searchType) throws BookNotFoundException {
         if (searchTerm.isEmpty()) {
             throw new BookNotFoundException("Search term cannot be empty.");
         }
-
+    
         List<BookApi> books;
         List<BookApi> books2;
-
+    
         switch (searchType.toLowerCase()) {
             case "isbn":
                 books = apiConnector.searchByISBN("bib",searchTerm);
@@ -563,16 +563,23 @@ public class LibraryManager {
             default:
                 throw new IllegalArgumentException("Invalid search type: " + searchType);
         }
-
+    
+        StringBuilder booksString = new StringBuilder();
         if (!books.isEmpty()) {
-            List<BookApi> firstTwoBooks = books.stream().limit(2).collect(Collectors.toList()); // assuming the first result is what we want
-            return firstTwoBooks.toString();
-        }else if (!books2.isEmpty()) {
-            List<BookApi> bookApi2 = books2.stream().limit(2).collect(Collectors.toList());
-            return bookApi2.toString();
+            List<BookApi> firstTwoBooks = books.stream().limit(50).collect(Collectors.toList());
+            for (BookApi book : firstTwoBooks) {
+                booksString.append(book.toString());
+            }
+        } else if (!books2.isEmpty()) {
+            List<BookApi> bookApi2 = books2.stream().limit(50).collect(Collectors.toList());
+            for (BookApi book : bookApi2) {
+                booksString.append(book.toString());
+            }
+        } else {
+            throw new BookNotFoundException("Book not found: " + searchTerm);
         }
-
-        throw new BookNotFoundException("Book not found: " + searchTerm);
+    
+        return booksString.toString();
     }
 
     /**

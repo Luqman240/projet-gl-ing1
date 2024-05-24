@@ -68,4 +68,28 @@
     -fx-padding: 10px;             /* Espacement interne */
 }
 
+/* Style général pour les fenêtres de dialogue */
+.dialog-root {
+    -fx-font-family: "Arial";
+    -fx-background-color: #f8f8f8;
+}
+
+/* Zone de texte de la fenêtre de dialogue */
+.dialog-textfield {
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* Pagination de la fenêtre de dialogue */
+.dialog-pagination {
+    -fx-border-color: #1e90ff;
+    -fx-border-width: 2px;
+}
+
+/* ListView de la fenêtre de dialogue */
+.dialog-listview {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #1e90ff;
+    -fx-border-width: 2px;
+}
 
