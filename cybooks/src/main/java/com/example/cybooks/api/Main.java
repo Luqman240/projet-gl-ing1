@@ -18,11 +18,12 @@ public class Main {
         // Creating an instance of ApiConnector
         ApiConnector apiConnector = new ApiConnector();
         // Searching for books by title using the "bib" record type and "les misérables" title
-        List<BookApi> bookApis = apiConnector.searchByTitle("bib", "les misérables");
+        List<BookApi> bookApis = apiConnector.searchByDate("bib", "2019");
         // Printing the title and ISBN of each book found
         for (BookApi bookApi : bookApis) {
             System.out.println(bookApi.getTitle());
             System.out.println(bookApi.getIsbn());
+            System.out.println(bookApi.getDate());
         }
     }
 }

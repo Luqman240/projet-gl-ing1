@@ -99,6 +99,32 @@ public class ApiConnector {
     }
 
     /**
+     * Searches for books by date using the provided record type and date.
+     *
+     * @param recordType The type of record to search for (e.g., "bib" or "aut").
+     * @param date      The date of the book to search for.
+     * @return A list of BookApi objects representing the books found.
+     */
+    public List<BookApi> searchByDate(String recordType, String date){
+        String url = API_BASE_URL;
+        String encodedQuery = "";
+        String query = "";
+
+        if(date.isEmpty()){
+            System.out.println("ERROR : Date CANT BE EMPTY");
+            return List.of();
+        }
+        if((recordType.isEmpty()) || (!recordType.equals("bib") && !recordType.equals("aut"))){
+            System.out.println("ERROR : RECORD TYPE NOT VALID");
+            return List.of();
+        }
+        query += "(" + recordType + ".date all \"" + date + "\")";
+        encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        url += encodedQuery + "&recordSchema=dublincore&maximumRecords=500&startRecord=1";
+        return this.get(url);
+    }
+
+    /**
      * Executes an HTTP GET request to the specified API URL and parses the XML response.
      *
      * @param apiUrl The URL of the API to connect to.
