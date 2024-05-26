@@ -26,6 +26,7 @@ public class DataBase {
         try {
             String command = "C:\\wamp64\\bin\\mysql\\mysql8.2.0\\bin\\mysqld.exe";
             try {
+                @SuppressWarnings({ "unused", "deprecation" })
                 Process process = Runtime.getRuntime().exec(command);
             } catch (Exception e) {
                 command = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqld.exe";
@@ -171,10 +172,12 @@ public class DataBase {
                 // Stop the mysqld process
                 String command = "C:\\wamp64\\bin\\mysql\\mysql8.2.0\\bin\\mysqladmin.exe -u root shutdown";
                 try {
+                    @SuppressWarnings({ "unused", "deprecation" })
                     Process process = Runtime.getRuntime().exec(command);
                 } catch (Exception e) {
                     command = "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqladmin.exe -u root shutdown";
                     try {
+                        @SuppressWarnings({ "unused", "deprecation" })
                         Process process = Runtime.getRuntime().exec(command);
                     } catch (IOException e1) {
                         e1.printStackTrace();
