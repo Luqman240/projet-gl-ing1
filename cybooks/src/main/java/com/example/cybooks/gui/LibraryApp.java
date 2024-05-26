@@ -764,8 +764,8 @@ public class LibraryApp extends Application {
 
         Button btnLoanBook = new Button("Loan Book");
         Button btnPrintLoan = new Button("Print all Loan");
-        Button btnReturnLoan = new Button("PrintOverdue Loan");
-        Button btnRenewLoan = new Button("printMostLoanedBooksLast30d");
+        Button btnReturnLoan = new Button("Print Overdue Loan");
+        Button btnRenewLoan = new Button("Print Most Loaned Books Last 30d");
 
         btnLoanBook.setOnAction(e -> showLoanBookDialog());
         btnPrintLoan.setOnAction(e -> showPrintLoanDialog());
