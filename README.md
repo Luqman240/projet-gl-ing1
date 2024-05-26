@@ -8,9 +8,13 @@ Ce projet,intitulé CY-Books, avait pour objectif de développer une application
 Ce projet a été réalisé par une équipe de 5 étudiants de CY Tech, composée de :
 
 Younes BENABDELLAH (ING 1 GI1)
+
 Matthieu ALLOCHON (ING 1 GI3)
+
 Wassim SOUSSA (ING 1 GI3)
+
 Ilyass SALHI (ING 1 GI4)
+
 Luqman SAID MOHAMED HARIBOU (ING 1 GI4)
 
 ## Prérequis
